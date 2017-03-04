@@ -14,6 +14,7 @@ public class robot extends SampleRobot {
         myDrive = new RobotDrive(2, 3, 1, 0);
         left = new Joystick(1);
         right = new Joystick(2);
+        SmartDashboard.putString("Hello_World","Hi!");
     }
 
     public void autonomousPeriodic() {
