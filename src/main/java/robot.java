@@ -9,6 +9,7 @@ public class robot extends SampleRobot {
 
     RobotDrive myDrive;
     Joystick left, right;
+    String AutonTime;
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
@@ -18,7 +19,8 @@ public class robot extends SampleRobot {
     }
 
     public void autonomousPeriodic() {
-
+        AutonTime = String.valueOf(System.currentTimeMillis());
+        SmartDashboard.putString("AutonTime",AutonTime);
     }
 
     public void operatorControl() {
