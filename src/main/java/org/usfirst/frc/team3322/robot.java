@@ -1,4 +1,4 @@
-/*
+package org.usfirst.frc.team3322;/*
  * Created by 3322 - Programming 3 on 3/2/2017.
  */
 
@@ -13,8 +13,8 @@ public class robot extends SampleRobot {
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
-        left = new Joystick(1);
-        right = new Joystick(2);
+        left = new Joystick(0);
+        right = new Joystick(1);
         SmartDashboard.putString("Hello_World","Hi!");
     }
 
