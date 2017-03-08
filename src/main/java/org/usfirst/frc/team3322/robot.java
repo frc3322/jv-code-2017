@@ -13,8 +13,8 @@ public class robot extends SampleRobot {
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
-        left = new Joystick(0);
-        right = new Joystick(1);
+        left = new Joystick(1);
+        right = new Joystick(2);
         SmartDashboard.putString("Hello_World","Hi!");
     }
 
