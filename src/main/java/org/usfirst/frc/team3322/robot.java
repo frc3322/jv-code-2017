@@ -17,6 +17,12 @@ public class robot extends SampleRobot {
         SmartDashboard.putString("Hello_World","Hi!");
     }
 
+    public void autonomousInit() {
+        SmartDashboard.putNumber("StartPosInCode",3322);
+        SmartDashboard.putNumber("auton", 2);
+        SmartDashboard.putBoolean("enabled", true);
+    }
+
     public void autonomousPeriodic() {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
