@@ -28,6 +28,10 @@ public class robot extends SampleRobot {
         SmartDashboard.putString("AutonTime",AutonTime);
     }
 
+    public void disabledInit() {
+        SmartDashboard.putNumber("x_length", 100);
+    }
+
     public void operatorControl() {
         while (isOperatorControl() && isEnabled()) {
                 myDrive.arcadeDrive(driveStick);
