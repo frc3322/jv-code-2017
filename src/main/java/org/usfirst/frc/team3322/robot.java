@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class robot extends SampleRobot {
 
     RobotDrive myDrive;
-    Joystick left, right;
+    Joystick driveStick;
     String AutonTime;
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
-        left = new Joystick(1);
-        right = new Joystick(2);
+        driveStick = new Joystick(0);
         SmartDashboard.putString("Hello_World","Hi!");
     }
 
@@ -25,7 +24,7 @@ public class robot extends SampleRobot {
 
     public void operatorControl() {
         while (isOperatorControl() && isEnabled()) {
-            myDrive.tankDrive(left, right);
+                myDrive.arcadeDrive(driveStick);
             Timer.delay(0.01);
         }
     }
