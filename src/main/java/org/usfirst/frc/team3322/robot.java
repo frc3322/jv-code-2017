@@ -8,12 +8,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class robot extends IterativeRobot {
 
     RobotDrive myDrive;
-    Joystick driveStick;
+    //Joystick driveStick;
+    static OI xbox;
     String AutonTime;
+    double currentThrottle,currentTurn;
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
-        driveStick = new Joystick(0);
+       // driveStick = new Joystick(0);
+        xbox = new OI();
     }
 
     public void autonomousInit() {
@@ -45,9 +48,13 @@ public class robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
+
         while (isOperatorControl() && isEnabled()) {
-                myDrive.arcadeDrive(driveStick);
+                //myDrive.arcadeDrive(driveStick);
             Timer.delay(0.01);
+            currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
+            currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
+            myDrive.arcadeDrive(currentThrottle,currentTurn);
         }
     }
 
