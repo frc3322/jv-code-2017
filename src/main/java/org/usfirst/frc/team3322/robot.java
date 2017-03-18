@@ -54,6 +54,10 @@ public class robot extends IterativeRobot {
             Timer.delay(0.01);
             currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
             currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
+            if(xbox.heldDown(OI.RBUMPER)) {
+                currentThrottle = currentThrottle * -1;
+                currentTurn = currentTurn * -1;
+            }
             myDrive.arcadeDrive(currentThrottle,currentTurn);
         }
     }
