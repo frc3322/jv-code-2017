@@ -24,7 +24,6 @@ public class robot extends IterativeRobot {
         SmartDashboard.putNumber("auton", 2);
         SmartDashboard.putBoolean("enabled", true);
     }
-
     public void autonomousPeriodic() {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
@@ -54,7 +53,7 @@ public class robot extends IterativeRobot {
             Timer.delay(0.01);
             currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
             currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
-            if(xbox.heldDown(OI.RBUMPER)) {
+            if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
                 currentTurn = currentTurn * -1;
             }
