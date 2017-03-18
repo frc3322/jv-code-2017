@@ -5,7 +5,7 @@ package org.usfirst.frc.team3322;/*
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class robot extends SampleRobot {
+public class robot extends IterativeRobot {
 
     RobotDrive myDrive;
     Joystick driveStick;
@@ -14,7 +14,6 @@ public class robot extends SampleRobot {
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
         driveStick = new Joystick(0);
-        SmartDashboard.putString("Hello_World","Hi!");
     }
 
     public void autonomousInit() {
@@ -28,11 +27,24 @@ public class robot extends SampleRobot {
         SmartDashboard.putString("AutonTime",AutonTime);
     }
 
-    public void disabled() {
+    public void disabledInit() {
         SmartDashboard.putNumber("x_length", 100);
+        SmartDashboard.putNumber("y_length", 132);
     }
 
-    public void operatorControl() {
+    public void disabledPeriodic() {
+        SmartDashboard.putBoolean("auton_ready",false);
+        SmartDashboard.putNumber("StartPosInCode",42);
+        SmartDashboard.putBoolean("enabled",false);
+    }
+
+    public void teleopInit() {
+        SmartDashboard.putNumber("teleop",0);
+        SmartDashboard.putNumber("auton",0);
+        SmartDashboard.putBoolean("enabled", true);
+    }
+
+    public void teleopPeriodic() {
         while (isOperatorControl() && isEnabled()) {
                 myDrive.arcadeDrive(driveStick);
             Timer.delay(0.01);
