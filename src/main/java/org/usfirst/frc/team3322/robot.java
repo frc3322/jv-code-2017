@@ -3,6 +3,7 @@ package org.usfirst.frc.team3322;/*
  */
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class robot extends IterativeRobot {
@@ -17,6 +18,7 @@ public class robot extends IterativeRobot {
         myDrive = new RobotDrive(2, 3, 1, 0);
        // driveStick = new Joystick(0);
         xbox = new OI();
+        CameraServer.getInstance().startAutomaticCapture();
     }
 
     public void autonomousInit() {
