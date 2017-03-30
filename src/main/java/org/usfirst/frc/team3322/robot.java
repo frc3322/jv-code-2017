@@ -12,7 +12,18 @@ public class robot extends IterativeRobot {
     //Joystick driveStick;
     static OI xbox;
     String AutonTime;
-    double currentThrottle,currentTurn;
+    boolean drivingStraight = false;
+    double xLength,
+            yLength,
+            driveStraightAngle,
+            previousThrottle = 0,
+            previousTurn = 0,
+            maxTurnDelta = .05,
+            maxThrottleDelta = .05,
+            turnValue,
+            throttleValue,
+            currentTurn,
+            currentThrottle;
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
@@ -59,8 +70,34 @@ public class robot extends IterativeRobot {
                 currentThrottle = currentThrottle * -1;
                 currentTurn = currentTurn * -1;
             }
-            myDrive.arcadeDrive(currentThrottle,currentTurn);
+            //myDrive.arcadeDrive(currentThrottle,currentTurn);
+            myDrive.arcadeDrive(-throttleValue, turnValue);
+            drivingStraight = false;
         }
     }
+    private void clamp(){
+        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
+        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
 
+        double deltaTurn = currentTurn - previousTurn;
+        double deltaThrottle = currentThrottle - previousThrottle;
+
+        if(Math.abs(deltaTurn) > maxTurnDelta && (previousTurn / deltaTurn) > 0){
+            turnValue = previousTurn + ((deltaTurn < 0)? -maxTurnDelta : maxTurnDelta);
+        } else {
+            turnValue = currentTurn;
+        }
+
+        if (Math.abs(deltaThrottle) > maxThrottleDelta && (previousThrottle / deltaThrottle) > 0) {
+            throttleValue = previousThrottle + ((deltaThrottle < 0)? -maxThrottleDelta : maxThrottleDelta);
+        } else {
+            throttleValue = currentThrottle;
+        }
+
+        previousThrottle = throttleValue;
+        previousTurn = turnValue;
+
+        SmartDashboard.putNumber("turn_value", turnValue);
+        SmartDashboard.putNumber("joystick", currentTurn);
+    }
 }
