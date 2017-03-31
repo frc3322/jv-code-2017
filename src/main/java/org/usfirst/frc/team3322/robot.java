@@ -70,12 +70,12 @@ public class robot extends IterativeRobot {
                 currentThrottle = currentThrottle * -1;
                 currentTurn = currentTurn * -1;
             }
-            //myDrive.arcadeDrive(currentThrottle,currentTurn);
-            myDrive.arcadeDrive(-throttleValue, turnValue);
-            drivingStraight = false;
+            myDrive.arcadeDrive(currentThrottle,currentTurn);
+           // myDrive.arcadeDrive(-throttleValue, turnValue);
+            //drivingStraight = false;
         }
     }
-    private void clamp(){
+   /* private void clamp(){
         currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
         currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
 
@@ -99,5 +99,5 @@ public class robot extends IterativeRobot {
 
         SmartDashboard.putNumber("turn_value", turnValue);
         SmartDashboard.putNumber("joystick", currentTurn);
-    }
+    }*/
 }
