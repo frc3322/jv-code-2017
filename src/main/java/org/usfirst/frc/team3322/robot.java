@@ -31,13 +31,7 @@ public class robot extends IterativeRobot {
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
-        String WriteString = "init";
-        char[] CharArray = WriteString.toCharArray();
-        byte[] WriteData = new byte[CharArray.length];
-        for (int i = 0; i < CharArray.length; i++) {
-            WriteData[i] = (byte) CharArray[i];
-        }
-        Arduino.transaction(WriteData, WriteData.length, null, 0);
+
     }
 
     public void autonomousInit() {
@@ -79,6 +73,15 @@ public class robot extends IterativeRobot {
                 currentTurn = currentTurn * -1;
             }
             myDrive.arcadeDrive(currentThrottle,currentTurn);
+            if(xbox.pressedOnce(OI.ABUTTON)){
+                String WriteString = "init";
+                char[] CharArray = WriteString.toCharArray();
+                byte[] WriteData = new byte[CharArray.length];
+                for (int i = 0; i < CharArray.length; i++) {
+                    WriteData[i] = (byte) CharArray[i];
+                }
+                Arduino.transaction(WriteData, WriteData.length, null, 0);
+            }
            // myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
         }
