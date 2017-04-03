@@ -73,7 +73,8 @@ public class robot extends IterativeRobot {
                 currentTurn = currentTurn * -1;
             }
             myDrive.arcadeDrive(currentThrottle,currentTurn);
-            if(xbox.pressedOnce(OI.ABUTTON)){
+            if(xbox.heldDown(OI.ABUTTON)){
+                System.out.print("Sending...");
                 String WriteString = "init";
                 char[] CharArray = WriteString.toCharArray();
                 byte[] WriteData = new byte[CharArray.length];
