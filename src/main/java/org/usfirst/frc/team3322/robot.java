@@ -24,12 +24,20 @@ public class robot extends IterativeRobot {
             throttleValue,
             currentTurn,
             currentThrottle;
+    static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
 
     public void robotInit() {
         myDrive = new RobotDrive(2, 3, 1, 0);
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
+        String WriteString = "init";
+        char[] CharArray = WriteString.toCharArray();
+        byte[] WriteData = new byte[CharArray.length];
+        for (int i = 0; i < CharArray.length; i++) {
+            WriteData[i] = (byte) CharArray[i];
+        }
+        Arduino.transaction(WriteData, WriteData.length, null, 0);
     }
 
     public void autonomousInit() {
