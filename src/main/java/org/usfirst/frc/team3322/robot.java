@@ -74,8 +74,16 @@ public class robot extends IterativeRobot {
             }
             myDrive.arcadeDrive(currentThrottle,currentTurn);
             if(xbox.heldDown(OI.ABUTTON)){
-                System.out.print("Sending...");
-                String WriteString = "init";
+                String WriteString = "on";
+                char[] CharArray = WriteString.toCharArray();
+                byte[] WriteData = new byte[CharArray.length];
+                for (int i = 0; i < CharArray.length; i++) {
+                    WriteData[i] = (byte) CharArray[i];
+                }
+                Arduino.transaction(WriteData, WriteData.length, null, 0);
+            }
+            if(xbox.heldDown(OI.BBUTTON)){
+                String WriteString = "off";
                 char[] CharArray = WriteString.toCharArray();
                 byte[] WriteData = new byte[CharArray.length];
                 for (int i = 0; i < CharArray.length; i++) {
