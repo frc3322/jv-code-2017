@@ -39,6 +39,16 @@ public class robot extends IterativeRobot {
         SmartDashboard.putNumber("auton", 2);
         SmartDashboard.putBoolean("enabled", true);
     }
+
+    public void ledMode(String mode) {
+        char[] CharArray = mode.toCharArray();
+        byte[] WriteData = new byte[CharArray.length];
+        for (int i = 0; i < CharArray.length; i++) {
+            WriteData[i] = (byte) CharArray[i];
+        }
+        Arduino.transaction(WriteData, WriteData.length, null, 0);
+    }
+
     public void autonomousPeriodic() {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
@@ -73,24 +83,10 @@ public class robot extends IterativeRobot {
                 currentTurn = currentTurn * -1;
             }
             myDrive.arcadeDrive(currentThrottle,currentTurn);
-            if(xbox.heldDown(OI.ABUTTON)){
-                String WriteString = "on";
-                char[] CharArray = WriteString.toCharArray();
-                byte[] WriteData = new byte[CharArray.length];
-                for (int i = 0; i < CharArray.length; i++) {
-                    WriteData[i] = (byte) CharArray[i];
-                }
-                Arduino.transaction(WriteData, WriteData.length, null, 0);
-            }
-            if(xbox.heldDown(OI.BBUTTON)){
-                String WriteString = "off";
-                char[] CharArray = WriteString.toCharArray();
-                byte[] WriteData = new byte[CharArray.length];
-                for (int i = 0; i < CharArray.length; i++) {
-                    WriteData[i] = (byte) CharArray[i];
-                }
-                Arduino.transaction(WriteData, WriteData.length, null, 0);
-            }
+            if(xbox.heldDown(OI.ABUTTON))
+                ledMode("on");
+            if(xbox.heldDown(OI.BBUTTON))
+                ledMode("off");
            // myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
         }
