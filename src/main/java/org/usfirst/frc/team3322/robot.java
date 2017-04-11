@@ -13,6 +13,8 @@ public class robot extends IterativeRobot {
     static OI xbox;
     String AutonTime;
     boolean drivingStraight = false;
+    boolean climbing;
+    boolean dumping;
     double xLength,
             yLength,
             driveStraightAngle,
@@ -87,6 +89,10 @@ public class robot extends IterativeRobot {
                 ledMode("on");
             if(xbox.heldDown(OI.BBUTTON))
                 ledMode("off");
+            if(climbing == true)
+                ledMode("up");
+            if(dumping == true)
+                ledMode("dump");
            // myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
         }
