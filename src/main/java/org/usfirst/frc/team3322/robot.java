@@ -77,27 +77,32 @@ public class robot extends IterativeRobot {
 
         while (isOperatorControl() && isEnabled()) {
                 //myDrive.arcadeDrive(driveStick);
-            Timer.delay(0.01);
-            currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
-            currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
+    //        Timer.delay(0.01);
+      //      currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
+        //    currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
+            clamp();
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
                 currentTurn = currentTurn * -1;
             }
-            myDrive.arcadeDrive(currentThrottle,currentTurn);
+            myDrive.arcadeDrive(-currentThrottle,currentTurn);
             if(xbox.heldDown(OI.ABUTTON))
                 ledMode("on");
             if(xbox.heldDown(OI.BBUTTON))
                 ledMode("off");
-            if(climbing == true)
+            if(climbing == true) {
                 ledMode("up");
-            if(dumping == true)
+                SmartDashboard.putBoolean("climb", true);
+            }
+            if(dumping == true) {
                 ledMode("dump");
-           // myDrive.arcadeDrive(-throttleValue, turnValue);
+                SmartDashboard.putBoolean("dump", true);
+            }
+          //myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
         }
     }
-   /* private void clamp(){
+    private void clamp(){
         currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
         currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
 
@@ -121,5 +126,5 @@ public class robot extends IterativeRobot {
 
         SmartDashboard.putNumber("turn_value", turnValue);
         SmartDashboard.putNumber("joystick", currentTurn);
-    }*/
+    }
 }
