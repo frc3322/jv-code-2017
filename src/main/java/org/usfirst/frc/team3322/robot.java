@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class robot extends IterativeRobot {
 
     RobotDrive myDrive;
+    DriverStation ds = DriverStation.getInstance();
     //Joystick driveStick;
     static OI xbox;
     String AutonTime;
@@ -26,6 +27,7 @@ public class robot extends IterativeRobot {
             throttleValue,
             currentTurn,
             currentThrottle;
+    boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
 
     public void robotInit() {
@@ -33,7 +35,10 @@ public class robot extends IterativeRobot {
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
-
+        DriverStation.Alliance color;
+        color = ds.getAlliance();
+        isRed = (color == DriverStation.Alliance.Red);
+        SmartDashboard.putBoolean("isRed", isRed);
     }
 
     public void autonomousInit() {
