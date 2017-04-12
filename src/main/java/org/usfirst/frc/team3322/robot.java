@@ -97,7 +97,7 @@ public class robot extends IterativeRobot {
                 ledMode("off");
             if(climbing == true) {
                 ledMode("up");
-                SmartDashboard.putBoolean("climb", true);
+                SmartDashboard.putBoolean("climby", true);
             }
             if(dumping == true) {
                 ledMode("dump");
