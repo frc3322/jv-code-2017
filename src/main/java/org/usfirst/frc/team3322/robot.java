@@ -90,11 +90,13 @@ public class robot extends IterativeRobot {
                 currentThrottle = currentThrottle * -1;
                 currentTurn = currentTurn * -1;
             }
-            if(xbox.heldDown(OI.YBUTTON)) {
-                climbing = true;
-            } else {
-                climbing = false;
-            }
+            if(xbox.isToggled(OI.YBUTTON)) {
+                if (climbing == false){
+                    climbing = true;
+                } else if (climbing == true){
+                    climbing = false;
+                }
+                }
             myDrive.arcadeDrive(-currentThrottle,currentTurn);
             if(xbox.heldDown(OI.ABUTTON))
                 ledMode("on");
