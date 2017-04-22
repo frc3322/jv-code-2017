@@ -16,6 +16,7 @@ public class robot extends IterativeRobot {
     boolean drivingStraight = false;
     boolean climbing;
     boolean dumping;
+    double rTriggerValue = xbox.getAxis(3);
     double xLength,
             yLength,
             driveStraightAngle,
@@ -97,6 +98,7 @@ public class robot extends IterativeRobot {
                     climbing = false;
                 }
                 }
+                SmartDashboard.putNumber("Right trigger", rTriggerValue);
             myDrive.arcadeDrive(-currentThrottle,currentTurn);
             if(xbox.heldDown(OI.ABUTTON))
                 ledMode("on");
@@ -109,6 +111,9 @@ public class robot extends IterativeRobot {
             if(dumping == true) {
                 ledMode("dump");
                 SmartDashboard.putBoolean("dump", true);
+            } else {
+                ledMode("normal");
+                SmartDashboard.putBoolean("dump", false);
             }
           //myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
