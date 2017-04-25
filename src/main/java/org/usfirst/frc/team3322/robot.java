@@ -21,7 +21,7 @@ public class robot extends IterativeRobot {
     boolean climbing;
     boolean dumping;
     //double rTriggerValue = xbox.getAxis(3);
-   // double lTriggerValue = xbox.getAxis(2);
+   double lTriggerValue;
     double xLength,
             yLength,
             driveStraightAngle,
@@ -124,6 +124,8 @@ public class robot extends IterativeRobot {
           //myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
+            lTriggerValue = xbox.getAxis(3);
+            SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
         }
     }
     private void clamp(){
