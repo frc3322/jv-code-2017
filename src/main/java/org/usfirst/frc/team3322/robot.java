@@ -7,7 +7,10 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class robot extends IterativeRobot {
-
+   /* public static final int
+            r_Trigger = 3;
+    public static final int
+            l_Trigger = 2;*/
     RobotDrive myDrive;
     DriverStation ds = DriverStation.getInstance();
     //Joystick driveStick;
@@ -16,7 +19,8 @@ public class robot extends IterativeRobot {
     boolean drivingStraight = false;
     boolean climbing;
     boolean dumping;
-    double rTriggerValue = xbox.getAxis(3);
+    //double rTriggerValue = xbox.getAxis(3);
+   // double lTriggerValue = xbox.getAxis(2);
     double xLength,
             yLength,
             driveStraightAngle,
@@ -98,7 +102,7 @@ public class robot extends IterativeRobot {
                     climbing = false;
                 }
                 }
-                SmartDashboard.putNumber("Right trigger", rTriggerValue);
+           // SmartDashboard.putNumber("Right trigger", rTriggerValue);
             myDrive.arcadeDrive(-currentThrottle,currentTurn);
             if(xbox.heldDown(OI.ABUTTON))
                 ledMode("on");
