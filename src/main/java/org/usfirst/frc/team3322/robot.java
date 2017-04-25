@@ -45,6 +45,7 @@ public class robot extends IterativeRobot {
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
+        climbcontrol = new climber();
     }
 
     public void autonomousInit() {
