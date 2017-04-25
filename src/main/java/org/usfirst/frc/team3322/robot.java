@@ -15,6 +15,7 @@ public class robot extends IterativeRobot {
     DriverStation ds = DriverStation.getInstance();
     //Joystick driveStick;
     static OI xbox;
+    static climber climbcontrol;
     String AutonTime;
     boolean drivingStraight = false;
     boolean climbing;
@@ -121,6 +122,7 @@ public class robot extends IterativeRobot {
             }
           //myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
+            climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
         }
     }
     private void clamp(){
