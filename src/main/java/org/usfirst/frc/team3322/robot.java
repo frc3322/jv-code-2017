@@ -124,7 +124,7 @@ public class robot extends IterativeRobot {
           //myDrive.arcadeDrive(-throttleValue, turnValue);
             //drivingStraight = false;
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
-            lTriggerValue = Math.abs(xbox.getAxis(3));
+            lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
         }
