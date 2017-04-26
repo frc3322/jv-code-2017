@@ -7,21 +7,15 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class robot extends IterativeRobot {
-   /* public static final int
-            r_Trigger = 3;
-    public static final int
-            l_Trigger = 2;*/
     RobotDrive myDrive;
     DriverStation ds = DriverStation.getInstance();
-    //Joystick driveStick;
     static OI xbox;
     static climber climbcontrol;
     String AutonTime;
     boolean drivingStraight = false;
     boolean climbing;
     boolean dumping;
-    //double rTriggerValue = xbox.getAxis(3);
-   double lTriggerValue;
+    double lTriggerValue;
     double xLength,
             yLength,
             driveStraightAngle,
@@ -35,8 +29,10 @@ public class robot extends IterativeRobot {
             currentThrottle;
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
+    Talon wapomatic;
 
     public void robotInit() {
+        wapomatic = new Talon(6);
         myDrive = new RobotDrive(2, 3, 1, 0);
        // driveStick = new Joystick(0);
         xbox = new OI();
@@ -126,7 +122,7 @@ public class robot extends IterativeRobot {
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
-            SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
+            wapomatic.set(lTriggerValue);
         }
     }
     private void clamp(){
