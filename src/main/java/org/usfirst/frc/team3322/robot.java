@@ -1,7 +1,6 @@
 package org.usfirst.frc.team3322;/*
  * Created by 3322 - Programming 3 on 3/2/2017.
  */
-//did this work?
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
