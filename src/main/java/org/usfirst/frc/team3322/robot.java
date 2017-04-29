@@ -30,6 +30,7 @@ public class robot extends IterativeRobot {
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
+    DigitalInput testSwitch;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -42,6 +43,7 @@ public class robot extends IterativeRobot {
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
         climbcontrol = new climber();
+        DigitalInput testSwitch = new DigitalInput(0);
     }
 
     public void autonomousInit() {
@@ -123,6 +125,10 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             wapomatic.set(lTriggerValue);
+            if(testSwitch.get())
+            {
+                SmartDashboard.putBoolean("testSwitch", true);
+            } else SmartDashboard.putBoolean("testSwitch", false);
         }
     }
     private void clamp(){
