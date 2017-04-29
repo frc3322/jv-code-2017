@@ -43,7 +43,7 @@ public class robot extends IterativeRobot {
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
         climbcontrol = new climber();
-        DigitalInput testSwitch = new DigitalInput(0);
+        testSwitch = new DigitalInput(0);
     }
 
     public void autonomousInit() {
