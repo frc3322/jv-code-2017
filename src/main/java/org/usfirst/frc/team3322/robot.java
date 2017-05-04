@@ -91,9 +91,9 @@ public class robot extends IterativeRobot {
       //      currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
         //    currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
             clamp();
+            currentTurn = currentTurn * -1;
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
-               // currentTurn = currentTurn;
             }
             if(xbox.isToggled(OI.YBUTTON)) {
                 if (climbing == false){
