@@ -27,6 +27,7 @@ public class robot extends IterativeRobot {
             throttleValue,
             currentTurn,
             currentThrottle;
+    DriverStation.Alliance color;
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
@@ -38,10 +39,6 @@ public class robot extends IterativeRobot {
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
-        DriverStation.Alliance color;
-        color = ds.getAlliance();
-        isRed = (color == DriverStation.Alliance.Red);
-        SmartDashboard.putBoolean("isRed", isRed);
         climbcontrol = new climber();
         testSwitch = new DigitalInput(0);
     }
@@ -50,6 +47,9 @@ public class robot extends IterativeRobot {
         SmartDashboard.putNumber("StartPosInCode",3322);
         SmartDashboard.putNumber("auton", 2);
         SmartDashboard.putBoolean("enabled", true);
+        color = ds.getAlliance();
+        isRed = (color == DriverStation.Alliance.Red);
+        SmartDashboard.putBoolean("isRed", isRed);
     }
 
     public void ledMode(String mode) {
