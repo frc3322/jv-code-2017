@@ -35,7 +35,7 @@ public class robot extends IterativeRobot {
 
     public void robotInit() {
         wapomatic = new Talon(6);
-        myDrive = new RobotDrive(2, 3, 1, 0);
+        myDrive = new RobotDrive(1, 0, 3, 2);
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
