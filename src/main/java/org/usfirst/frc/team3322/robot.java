@@ -21,8 +21,8 @@ public class robot extends IterativeRobot {
             driveStraightAngle,
             previousThrottle = 0,
             previousTurn = 0,
-            maxTurnDelta = .05,
-            maxThrottleDelta = .05,
+            maxTurnDelta = .1,
+            maxThrottleDelta = .1,
             turnValue,
             throttleValue,
             currentTurn,
@@ -93,7 +93,7 @@ public class robot extends IterativeRobot {
             clamp();
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
-                currentTurn = currentTurn * -1;
+               // currentTurn = currentTurn;
             }
             if(xbox.isToggled(OI.YBUTTON)) {
                 if (climbing == false){
@@ -132,8 +132,8 @@ public class robot extends IterativeRobot {
         }
     }
     private void clamp(){
-        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
-        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
+        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
+        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
 
         double deltaTurn = currentTurn - previousTurn;
         double deltaThrottle = currentThrottle - previousThrottle;
