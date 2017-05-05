@@ -32,6 +32,9 @@ public class robot extends IterativeRobot {
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
     DigitalInput testSwitch;
+   // ADXRS450_Gyro gyro;
+   // SPI spiport;
+    ADXRS450_Gyro gyroSPI;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -41,15 +44,21 @@ public class robot extends IterativeRobot {
         CameraServer.getInstance().startAutomaticCapture();
         climbcontrol = new climber();
         testSwitch = new DigitalInput(0);
+        //spiport = new SPI(Port.kOnboardCS0);
+        //gyro = new ADXRS450_Gyro(spiport);
+        gyroSPI = new ADXRS450_Gyro();
     }
 
     public void autonomousInit() {
-        SmartDashboard.putNumber("StartPosInCode",3322);
+        SmartDashboard.putNumber("StartPosInCode", 3322);
         SmartDashboard.putNumber("auton", 2);
         SmartDashboard.putBoolean("enabled", true);
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
+       /* SmartDashboard.getNumber("TurnDuration") {
+
+        } */
     }
 
     public void ledMode(String mode) {
