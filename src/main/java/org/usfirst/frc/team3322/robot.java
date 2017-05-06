@@ -36,6 +36,17 @@ public class robot extends IterativeRobot {
    // ADXRS450_Gyro gyro;
    // SPI spiport;
     ADXRS450_Gyro gyroSPI;
+    public enum autonModes{
+        DUMP,
+        BACKUP1,
+        TURN1,
+        BACKUP2,
+        TURN2
+    }
+    autonModes autonMode;
+    long currentTime;
+    long targetDuration;
+    long switchTime;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -45,8 +56,6 @@ public class robot extends IterativeRobot {
         CameraServer.getInstance().startAutomaticCapture();
         climbcontrol = new climber();
         testSwitch = new DigitalInput(0);
-        //spiport = new SPI(Port.kOnboardCS0);
-        //gyro = new ADXRS450_Gyro(spiport);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
     }
@@ -59,6 +68,7 @@ public class robot extends IterativeRobot {
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
         gyroSPI.reset();
+        autonMode = autonModes.DUMP;
 
     }
 
@@ -74,6 +84,32 @@ public class robot extends IterativeRobot {
     public void autonomousPeriodic() {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
+        SmartDashboard.putString("autonMode", String.valueOf(autonMode));
+        //dump
+        //back up
+        //turn 45 deg
+        //back up a bit
+        //turn other way to face peg
+        switch (autonMode){
+            case DUMP:
+                switchTime = System.currentTimeMillis();
+                targetDuration = 5000;
+                while(System.currentTimeMillis() - switchTime < targetDuration){
+                    //stay dumpy my friends
+            }
+                //undumpify
+                autonMode = autonModes.BACKUP1;
+                break;
+            case BACKUP1:
+
+                break;
+            case TURN1:
+                break;
+            case BACKUP2:
+                break;
+            case TURN2:
+                break;
+        }
     }
 
     public void disabledInit() {
