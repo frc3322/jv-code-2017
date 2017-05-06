@@ -113,18 +113,36 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 if (isRed) {
-                    targetHeading = gyroSPI.getAngle() + 10;
-                } else targetHeading = gyroSPI.getAngle() - 10;
+                    targetHeading = gyroSPI.getAngle() + 45;
+                } else targetHeading = gyroSPI.getAngle() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
-                    myDrive.arcadeDrive(0, -.25);
-                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
+                    if (isRed) myDrive.arcadeDrive(0, -.25);
+                   else  myDrive.arcadeDrive(0, .25);
+                   SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.BACKUP2;
                 break;
             case BACKUP2:
+                switchTime = System.currentTimeMillis();
+                targetDuration = 3000;
+                while(System.currentTimeMillis() - switchTime < targetDuration){
+                    myDrive.arcadeDrive(-.2, 0);
+                }
+                autonMode = autonModes.TURN2;
                 break;
             case TURN2:
+                switchTime = System.currentTimeMillis();
+                targetDuration = 5000;
+                if (isRed) {
+                    targetHeading = gyroSPI.getAngle() - 80;
+                } else targetHeading = gyroSPI.getAngle() + 80;
+                SmartDashboard.putNumber("targetHeading", targetHeading);
+                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
+                    if (isRed) myDrive.arcadeDrive(0, .25);
+                    else  myDrive.arcadeDrive(0, -.25);
+                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
+                }
                 break;
         }
     }
