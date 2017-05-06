@@ -118,8 +118,9 @@ public class robot extends IterativeRobot {
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
                     myDrive.arcadeDrive(0, -.25);
+                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
-                autonMode = autonModes.TURN1;
+                autonMode = autonModes.BACKUP2;
                 break;
             case BACKUP2:
                 break;
