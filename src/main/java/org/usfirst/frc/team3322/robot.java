@@ -47,6 +47,7 @@ public class robot extends IterativeRobot {
     long currentTime;
     long targetDuration;
     long switchTime;
+    double targetHeading;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -104,11 +105,21 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.1, 0);
+                    myDrive.arcadeDrive(-.2, 0);
                 }
                 autonMode = autonModes.TURN1;
                 break;
             case TURN1:
+                switchTime = System.currentTimeMillis();
+                targetDuration = 5000;
+                if (isRed) {
+                    targetHeading = gyroSPI.getAngle() + 10;
+                } else targetHeading = gyroSPI.getAngle() - 10;
+                SmartDashboard.putNumber("targetHeading", targetHeading);
+                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
+                    myDrive.arcadeDrive(0, -.25);
+                }
+                autonMode = autonModes.TURN1;
                 break;
             case BACKUP2:
                 break;
