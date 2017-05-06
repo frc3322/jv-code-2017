@@ -101,7 +101,12 @@ public class robot extends IterativeRobot {
                 autonMode = autonModes.BACKUP1;
                 break;
             case BACKUP1:
-
+                switchTime = System.currentTimeMillis();
+                targetDuration = 5000;
+                while(System.currentTimeMillis() - switchTime < targetDuration){
+                    myDrive.arcadeDrive(-.1, 0);
+                }
+                autonMode = autonModes.TURN1;
                 break;
             case TURN1:
                 break;
@@ -132,10 +137,6 @@ public class robot extends IterativeRobot {
     public void teleopPeriodic() {
 
         while (isOperatorControl() && isEnabled()) {
-                //myDrive.arcadeDrive(driveStick);
-    //        Timer.delay(0.01);
-      //      currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
-        //    currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
             clamp();
             currentTurn = currentTurn * -1;
             if(xbox.isToggled(OI.RBUMPER)) {
