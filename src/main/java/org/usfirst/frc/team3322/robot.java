@@ -15,6 +15,7 @@ public class robot extends IterativeRobot {
     boolean drivingStraight = false;
     boolean climbing;
     boolean dumping;
+    double heading;
     double lTriggerValue;
     double xLength,
             yLength,
@@ -47,6 +48,7 @@ public class robot extends IterativeRobot {
         //spiport = new SPI(Port.kOnboardCS0);
         //gyro = new ADXRS450_Gyro(spiport);
         gyroSPI = new ADXRS450_Gyro();
+        gyroSPI.calibrate();
     }
 
     public void autonomousInit() {
@@ -56,9 +58,8 @@ public class robot extends IterativeRobot {
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
-       /* SmartDashboard.getNumber("TurnDuration") {
+        gyroSPI.reset();
 
-        } */
     }
 
     public void ledMode(String mode) {
@@ -138,7 +139,10 @@ public class robot extends IterativeRobot {
             {
                 SmartDashboard.putBoolean("testSwitch", true);
             } else SmartDashboard.putBoolean("testSwitch", false);
+            heading = gyroSPI.getAngle();
+            SmartDashboard.putNumber("heading", heading);
         }
+
     }
     private void clamp(){
         currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
