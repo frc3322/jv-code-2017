@@ -41,7 +41,8 @@ public class robot extends IterativeRobot {
         BACKUP1,
         TURN1,
         BACKUP2,
-        TURN2
+        TURN2,
+        DONE
     }
     autonModes autonMode;
     long currentTime;
@@ -116,7 +117,7 @@ public class robot extends IterativeRobot {
                     targetHeading = gyroSPI.getAngle() + 45;
                 } else targetHeading = gyroSPI.getAngle() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
-                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
+                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5 && System.currentTimeMillis() - switchTime < targetDuration){
                     if (isRed) myDrive.arcadeDrive(0, -.25);
                    else  myDrive.arcadeDrive(0, .25);
                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
@@ -138,11 +139,14 @@ public class robot extends IterativeRobot {
                     targetHeading = gyroSPI.getAngle() - 80;
                 } else targetHeading = gyroSPI.getAngle() + 80;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
-                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5){
+                while(Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5 && System.currentTimeMillis() - switchTime < targetDuration){
                     if (isRed) myDrive.arcadeDrive(0, .25);
                     else  myDrive.arcadeDrive(0, -.25);
                     SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
+                autonMode = autonModes.DONE;
+                break;
+            case DONE:
                 break;
         }
     }
