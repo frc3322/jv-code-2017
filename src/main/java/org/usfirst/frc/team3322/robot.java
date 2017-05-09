@@ -106,7 +106,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.2, 0);
+                    myDrive.arcadeDrive(-.5, 0);
                 }
                 autonMode = autonModes.TURN1;
                 break;
@@ -118,8 +118,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, -.25);
-                   else  myDrive.arcadeDrive(0, .25);
+                    if (isRed) myDrive.arcadeDrive(0, -.5);
+                   else  myDrive.arcadeDrive(0, .5);
                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.BACKUP2;
@@ -128,7 +128,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.2, 0);
+                    myDrive.arcadeDrive(-.5, 0);
                 }
                 autonMode = autonModes.TURN2;
                 break;
@@ -140,8 +140,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() + 80;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, .25);
-                    else  myDrive.arcadeDrive(0, -.25);
+                    if (isRed) myDrive.arcadeDrive(0, .5);
+                    else  myDrive.arcadeDrive(0, -.5);
                     SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.DONE;
