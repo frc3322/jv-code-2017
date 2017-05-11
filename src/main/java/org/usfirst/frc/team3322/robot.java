@@ -54,9 +54,6 @@ public class robot extends IterativeRobot {
     Preferences prefs;
 
     public void robotInit() {
-        prefs = Preferences.getInstance();
-        autonSpeed = prefs.getDouble("autonSpeed", 0.5);
-        autonTurn = prefs.getDouble("autonTurn", 0.25);
         wapomatic = new Talon(6);
         myDrive = new RobotDrive(1, 0, 3, 2);
        // driveStick = new Joystick(0);
@@ -66,12 +63,14 @@ public class robot extends IterativeRobot {
         testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
-        autonSpeed = 0.25;
-        SmartDashboard.putNumber("autonSpeed", autonSpeed);
     }
 
     public void autonomousInit() {
-        autonSpeed = SmartDashboard.getNumber("autonSpeed");
+        prefs = Preferences.getInstance();
+        autonSpeed = prefs.getDouble("autonSpeed", 0.5);
+        autonTurn = prefs.getDouble("autonTurn", 0.25);
+        SmartDashboard.putNumber("autonSpeed", autonSpeed);
+        SmartDashboard.putNumber("autonTurn", autonTurn);
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
@@ -93,12 +92,6 @@ public class robot extends IterativeRobot {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
-        SmartDashboard.putNumber("autonSpeed", autonSpeed);
-        //dump
-        //back up
-        //turn 45 deg
-        //back up a bit
-        //turn other way to face peg
         switch (autonMode){
             case DUMP:
                 switchTime = System.currentTimeMillis();
