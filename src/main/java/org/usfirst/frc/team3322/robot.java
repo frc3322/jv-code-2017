@@ -49,8 +49,14 @@ public class robot extends IterativeRobot {
     long targetDuration;
     long switchTime;
     double targetHeading;
+    double autonSpeed;
+    double autonTurn;
+    Preferences prefs;
 
     public void robotInit() {
+        prefs = Preferences.getInstance();
+        autonSpeed = prefs.getDouble("autonSpeed", 0.5);
+        autonTurn = prefs.getDouble("autonTurn", 0.25);
         wapomatic = new Talon(6);
         myDrive = new RobotDrive(1, 0, 3, 2);
        // driveStick = new Joystick(0);
@@ -60,12 +66,12 @@ public class robot extends IterativeRobot {
         testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
+        autonSpeed = 0.25;
+        SmartDashboard.putNumber("autonSpeed", autonSpeed);
     }
 
     public void autonomousInit() {
-        SmartDashboard.putNumber("StartPosInCode", 3322);
-        SmartDashboard.putNumber("auton", 2);
-        SmartDashboard.putBoolean("enabled", true);
+        autonSpeed = SmartDashboard.getNumber("autonSpeed");
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
@@ -87,6 +93,7 @@ public class robot extends IterativeRobot {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
+        SmartDashboard.putNumber("autonSpeed", autonSpeed);
         //dump
         //back up
         //turn 45 deg
@@ -106,7 +113,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.5, 0);
+                    myDrive.arcadeDrive(-autonSpeed, 0);
                 }
                 autonMode = autonModes.TURN1;
                 break;
@@ -118,8 +125,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, -.5);
-                   else  myDrive.arcadeDrive(0, .5);
+                    if (isRed) myDrive.arcadeDrive(0, -autonTurn);
+                   else  myDrive.arcadeDrive(0, autonTurn);
                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.BACKUP2;
@@ -128,7 +135,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.5, 0);
+                    myDrive.arcadeDrive(-autonSpeed, 0);
                 }
                 autonMode = autonModes.TURN2;
                 break;
@@ -140,8 +147,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() + 80;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, .5);
-                    else  myDrive.arcadeDrive(0, -.5);
+                    if (isRed) myDrive.arcadeDrive(0, autonTurn);
+                    else  myDrive.arcadeDrive(0, -autonTurn);
                     SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.DONE;
