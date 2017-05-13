@@ -5,7 +5,6 @@ package org.usfirst.frc.team3322;/*
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class robot extends IterativeRobot {
     RobotDrive myDrive;
@@ -64,7 +63,7 @@ public class robot extends IterativeRobot {
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
         climbcontrol = new climber();
-        testSwitch = new DigitalInput(0);
+        //testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
         ultraL.setAutomaticMode(true);
