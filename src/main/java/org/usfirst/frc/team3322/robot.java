@@ -29,7 +29,7 @@ public class robot extends IterativeRobot {
             currentTurn,
             currentThrottle;
     DriverStation.Alliance color;
-    Ultrasonic ultraL = new Ultrasonic(1,1);
+    Ultrasonic ultraL = new Ultrasonic(8,8);
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
