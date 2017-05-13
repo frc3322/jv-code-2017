@@ -29,8 +29,6 @@ public class robot extends IterativeRobot {
             currentTurn,
             currentThrottle;
     DriverStation.Alliance color;
-    AnalogInput ai0;
-    AnalogInput ai1;
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
@@ -56,7 +54,6 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     Preferences prefs;
-    int dist;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -65,13 +62,9 @@ public class robot extends IterativeRobot {
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
         climbcontrol = new climber();
-        //testSwitch = new DigitalInput(0);
+        testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
-        ai0 = new AnalogInput(0);
-        ai1 = new AnalogInput(1);
-        ai0.setAverageBits(4);
-        ai1.setAverageBits(4);
     }
 
     public void autonomousInit() {
@@ -190,8 +183,6 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        dist = ai0.getAverageBits();
-        SmartDashboard.putNumber("dist", dist);
         while (isOperatorControl() && isEnabled()) {
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
@@ -232,10 +223,10 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             wapomatic.set(lTriggerValue);
-            /*if(testSwitch.get())
+            if(testSwitch.get())
             {
                 SmartDashboard.putBoolean("testSwitch", true);
-            } else SmartDashboard.putBoolean("testSwitch", false);*/
+            } else SmartDashboard.putBoolean("testSwitch", false);
             heading = gyroSPI.getAngle();
             SmartDashboard.putNumber("heading", heading);
         }
