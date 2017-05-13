@@ -226,10 +226,10 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             wapomatic.set(lTriggerValue);
-            if(testSwitch.get())
+            /*if(testSwitch.get())
             {
                 SmartDashboard.putBoolean("testSwitch", true);
-            } else SmartDashboard.putBoolean("testSwitch", false);
+            } else SmartDashboard.putBoolean("testSwitch", false);*/
             heading = gyroSPI.getAngle();
             SmartDashboard.putNumber("heading", heading);
         }
