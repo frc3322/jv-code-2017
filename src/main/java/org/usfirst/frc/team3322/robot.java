@@ -29,7 +29,7 @@ public class robot extends IterativeRobot {
             currentTurn,
             currentThrottle;
     DriverStation.Alliance color;
-    Ultrasonic ultraL = new Ultrasonic(8,8);
+    Ultrasonic ultraL;
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
@@ -66,6 +66,7 @@ public class robot extends IterativeRobot {
         //testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
+        ultraL = new Ultrasonic(8, 8);
         ultraL.setAutomaticMode(true);
     }
 
