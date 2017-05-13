@@ -51,6 +51,8 @@ public class robot extends IterativeRobot {
     double targetHeading;
     double autonSpeed;
     double autonTurn;
+    double hopBackSpeed;
+    double hopBackTime;
     Preferences prefs;
 
     public void robotInit() {
@@ -163,9 +165,11 @@ public class robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-        SmartDashboard.putNumber("teleop",0);
-        SmartDashboard.putNumber("auton",0);
-        SmartDashboard.putBoolean("enabled", true);
+        prefs = Preferences.getInstance();
+        hopBackSpeed = prefs.getDouble("hopBackSpeed", 0.2);
+        hopBackTime = prefs.getDouble("hopBackTime", 100);
+        SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
+        SmartDashboard.putNumber("hopBackTime", hopBackTime);
     }
 
     public void teleopPeriodic() {
@@ -181,10 +185,10 @@ public class robot extends IterativeRobot {
         // taunt = dpad
         while (isOperatorControl() && isEnabled()) {
             if(xbox.pressedOnce(OI.BBUTTON)) {
+                //hopBack
                 switchTime = System.currentTimeMillis();
-                targetDuration = 1000;
-                while (System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-.8, 0);
+                while (System.currentTimeMillis() - switchTime < hopBackTime){
+                    myDrive.arcadeDrive(hopBackSpeed, 0);
                 }
             }
             clamp();
