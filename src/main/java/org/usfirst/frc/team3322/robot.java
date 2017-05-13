@@ -185,7 +185,7 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        SmartDashboard.putNumber("ultraLRange", ultraL.getRangeInches());
+       // SmartDashboard.putNumber("ultraLRange", ultraL.getRangeInches());
         while (isOperatorControl() && isEnabled()) {
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
