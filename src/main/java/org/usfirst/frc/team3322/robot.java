@@ -190,6 +190,10 @@ public class robot extends IterativeRobot {
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     myDrive.arcadeDrive(hopBackSpeed, 0);
                 }
+                switchTime = System.currentTimeMillis();
+                while (System.currentTimeMillis() - switchTime < hopBackTime){
+                    myDrive.arcadeDrive(-hopBackSpeed, 0);
+                }
             }
             clamp();
             currentTurn = currentTurn * -1;
