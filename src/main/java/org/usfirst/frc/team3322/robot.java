@@ -5,6 +5,7 @@ package org.usfirst.frc.team3322;/*
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class robot extends IterativeRobot {
     RobotDrive myDrive;
@@ -185,7 +186,7 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-       // SmartDashboard.putNumber("ultraLRange", ultraL.getRangeInches());
+        SmartDashboard.putNumber("ultraLRange", ultraL.getRangeInches());
         while (isOperatorControl() && isEnabled()) {
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
