@@ -169,26 +169,37 @@ public class robot extends IterativeRobot {
     }
 
     public void teleopPeriodic() {
-
+        // analogWap = lTrigger
+        // wapVomit = lBumper
+        // drive = lStickY
+        // turn = rStickX
+        // dump = holdAButton
+        // hopBack = bButton
+        // forceClimb = xButton
+        // invertDrive = rBumper
+        // climb = yButton
+        // taunt = dpad
         while (isOperatorControl() && isEnabled()) {
+            if(xbox.pressedOnce(OI.BBUTTON)) {
+                switchTime = System.currentTimeMillis();
+                targetDuration = 1000;
+                while (System.currentTimeMillis() - switchTime < targetDuration){
+                    myDrive.arcadeDrive(-.8, 0);
+                }
+            }
             clamp();
             currentTurn = currentTurn * -1;
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
             }
             if(xbox.isToggled(OI.YBUTTON)) {
-                if (climbing == false){
+                if (climbing == false) {
                     climbing = true;
-                } else if (climbing == true){
+                } else if (climbing == true) {
                     climbing = false;
                 }
-                }
-           // SmartDashboard.putNumber("Right trigger", rTriggerValue);
+            }
             myDrive.arcadeDrive(-currentThrottle,currentTurn);
-            if(xbox.heldDown(OI.ABUTTON))
-                ledMode("on");
-            if(xbox.heldDown(OI.BBUTTON))
-                ledMode("off");
             if(climbing == true) {
                 ledMode("up");
                 SmartDashboard.putBoolean("climb", true);
@@ -200,8 +211,6 @@ public class robot extends IterativeRobot {
                 ledMode("normal");
                 SmartDashboard.putBoolean("dump", false);
             }
-          //myDrive.arcadeDrive(-throttleValue, turnValue);
-            //drivingStraight = false;
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
