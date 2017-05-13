@@ -29,7 +29,8 @@ public class robot extends IterativeRobot {
             currentTurn,
             currentThrottle;
     DriverStation.Alliance color;
-    Ultrasonic ultraL;
+    AnalogInput ai0;
+    AnalogInput ai1;
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
@@ -55,6 +56,7 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     Preferences prefs;
+    int dist;
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -66,8 +68,10 @@ public class robot extends IterativeRobot {
         //testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
-        ultraL = new Ultrasonic(8, 8);
-        ultraL.setAutomaticMode(true);
+        ai0 = new AnalogInput(0);
+        ai1 = new AnalogInput(1);
+        ai0.setAverageBits(4);
+        ai1.setAverageBits(4);
     }
 
     public void autonomousInit() {
@@ -186,7 +190,8 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        SmartDashboard.putNumber("ultraLRange", ultraL.getRangeInches());
+        dist = ai0.getAverageBits();
+        SmartDashboard.putNumber("dist", dist);
         while (isOperatorControl() && isEnabled()) {
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
