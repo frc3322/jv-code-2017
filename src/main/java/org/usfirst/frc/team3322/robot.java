@@ -54,7 +54,8 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     Preferences prefs;
-    AnalogInput ai = new AnalogInput(0);
+    AnalogInput ultraL = new AnalogInput(0);
+    AnalogInput ultraR = new AnalogInput(1);
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -185,10 +186,14 @@ public class robot extends IterativeRobot {
         // climb = yButton
         // taunt = dpad
         while (isOperatorControl() && isEnabled()) {
-            int dist;
-            ai.setAverageBits(2);
-            dist = ai.getValue();
-            SmartDashboard.putNumber("dist", dist);
+            int distL;
+            int distR;
+            ultraL.setAverageBits(8);
+            ultraR.setAverageBits(8);
+            distL = ultraL.getValue();
+            distR = ultraR.getValue();
+            SmartDashboard.putNumber("distL", distL);
+            SmartDashboard.putNumber("distR", distR);
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
