@@ -54,6 +54,7 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     Preferences prefs;
+    AnalogInput ai = new AnalogInput(0);
 
     public void robotInit() {
         wapomatic = new Talon(6);
@@ -184,6 +185,10 @@ public class robot extends IterativeRobot {
         // climb = yButton
         // taunt = dpad
         while (isOperatorControl() && isEnabled()) {
+            int dist;
+            ai.setAverageBits(2);
+            dist = ai.getAverageBits();
+            SmartDashboard.putNumber("dist", dist);
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
