@@ -172,6 +172,12 @@ public class robot extends IterativeRobot {
         hopBackTime = prefs.getDouble("hopBackTime", 100);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
+        ultraL.setGlobalSampleRate(1000);
+        ultraR.setGlobalSampleRate(1000);
+        ultraL.setOversampleBits(10);
+        ultraR.setOversampleBits(10);
+        ultraL.setAverageBits(5);
+        ultraR.setAverageBits(5);
     }
 
     public void teleopPeriodic() {
@@ -188,8 +194,6 @@ public class robot extends IterativeRobot {
         while (isOperatorControl() && isEnabled()) {
             int distL;
             int distR;
-            ultraL.setAverageBits(8);
-            ultraR.setAverageBits(8);
             distL = ultraL.getValue();
             distR = ultraR.getValue();
             SmartDashboard.putNumber("distL", distL);
