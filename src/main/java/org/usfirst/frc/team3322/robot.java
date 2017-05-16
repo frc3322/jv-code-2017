@@ -187,7 +187,7 @@ public class robot extends IterativeRobot {
         while (isOperatorControl() && isEnabled()) {
             int dist;
             ai.setAverageBits(2);
-            dist = ai.getAverageBits();
+            dist = ai.getValue();
             SmartDashboard.putNumber("dist", dist);
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
