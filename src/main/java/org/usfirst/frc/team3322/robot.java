@@ -236,7 +236,9 @@ public class robot extends IterativeRobot {
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
-            wapomatic.set(lTriggerValue);
+            if (xbox.isToggled(OI.LBUMPER)) {
+                wapomatic.set(lTriggerValue);
+            } else wapomatic.set(-lTriggerValue);
             if(testSwitch.get())
             {
                 SmartDashboard.putBoolean("testSwitch", true);
