@@ -32,6 +32,7 @@ public class robot extends IterativeRobot {
     boolean isRed;
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
+    TalonSRX dumper;
     DigitalInput testSwitch;
    // ADXRS450_Gyro gyro;
    // SPI spiport;
@@ -60,6 +61,8 @@ public class robot extends IterativeRobot {
     public void robotInit() {
         wapomatic = new Talon(6);
         myDrive = new RobotDrive(1, 0, 3, 2);
+        dumper = new TalonSRX(7);
+        //dumper.;
        // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
