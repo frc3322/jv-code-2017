@@ -5,6 +5,7 @@ package org.usfirst.frc.team3322;/*
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.CANTalon;
 
 public class robot extends IterativeRobot {
     RobotDrive myDrive;
