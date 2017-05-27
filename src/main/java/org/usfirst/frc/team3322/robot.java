@@ -226,6 +226,9 @@ public class robot extends IterativeRobot {
                     climbing = false;
                 }
             }
+            if(xbox.heldDown(OI.ABUTTON)) {
+                dumper.set(1);
+            } else dumper.set(-1);
             myDrive.arcadeDrive(-currentThrottle,currentTurn);
             if(climbing == true) {
                 ledMode("up");
@@ -242,8 +245,8 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
-                dumper.set(lTriggerValue);
-            } else dumper.set(-lTriggerValue);
+                wapomatic.set(lTriggerValue);
+            } else wapomatic.set(-lTriggerValue);
             if(testSwitch.get())
             {
                 SmartDashboard.putBoolean("testSwitch", true);
