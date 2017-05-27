@@ -63,6 +63,7 @@ public class robot extends IterativeRobot {
         wapomatic = new Talon(6);
         myDrive = new RobotDrive(1, 0, 3, 2);
         dumper = new CANTalon(4);
+        dumper.enableLimitSwitch(true, true);
         //dumper.;
        // driveStick = new Joystick(0);
         xbox = new OI();
@@ -241,8 +242,8 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
-                wapomatic.set(lTriggerValue);
-            } else wapomatic.set(-lTriggerValue);
+                dumper.set(lTriggerValue);
+            } else dumper.set(-lTriggerValue);
             if(testSwitch.get())
             {
                 SmartDashboard.putBoolean("testSwitch", true);
