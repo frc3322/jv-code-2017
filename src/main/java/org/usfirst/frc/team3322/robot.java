@@ -106,9 +106,9 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    //stay dumpy my friends
+                    dumper.set(1);
             }
-                //undumpify
+                dumper.set(-1);
                 autonMode = autonModes.BACKUP1;
                 break;
             case BACKUP1:
