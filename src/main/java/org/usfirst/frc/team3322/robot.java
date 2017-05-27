@@ -8,20 +8,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
 
 public class robot extends IterativeRobot {
-    RobotDrive myDrive;
+    RobotDrive driveTrain;
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
     static climber climbcontrol;
     String AutonTime;
-    boolean drivingStraight = false;
-    boolean climbing;
-    boolean dumping;
     double heading;
     double lTriggerValue;
-    double xLength,
-            yLength,
-            driveStraightAngle,
-            previousThrottle = 0,
+    double previousThrottle = 0,
             previousTurn = 0,
             maxTurnDelta = .1,
             maxThrottleDelta = .1,
@@ -34,9 +28,6 @@ public class robot extends IterativeRobot {
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
     CANTalon dumper;
-    DigitalInput testSwitch;
-   // ADXRS450_Gyro gyro;
-   // SPI spiport;
     ADXRS450_Gyro gyroSPI;
     public enum autonModes{
         DUMP,
@@ -47,7 +38,6 @@ public class robot extends IterativeRobot {
         DONE
     }
     autonModes autonMode;
-    long currentTime;
     long targetDuration;
     long switchTime;
     double targetHeading;
@@ -61,15 +51,12 @@ public class robot extends IterativeRobot {
 
     public void robotInit() {
         wapomatic = new Talon(6);
-        myDrive = new RobotDrive(1, 0, 3, 2);
+        driveTrain = new RobotDrive(1, 0, 3, 2);
         dumper = new CANTalon(4);
         dumper.enableLimitSwitch(true, true);
-        //dumper.;
-       // driveStick = new Joystick(0);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
         climbcontrol = new climber();
-        testSwitch = new DigitalInput(0);
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
     }
@@ -115,7 +102,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-autonSpeed, 0);
+                    driveTrain.arcadeDrive(-autonSpeed, 0);
                 }
                 autonMode = autonModes.TURN1;
                 break;
@@ -127,8 +114,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, -autonTurn);
-                   else  myDrive.arcadeDrive(0, autonTurn);
+                    if (isRed) driveTrain.arcadeDrive(0, -autonTurn);
+                   else  driveTrain.arcadeDrive(0, autonTurn);
                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.BACKUP2;
@@ -137,7 +124,7 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
                 while(System.currentTimeMillis() - switchTime < targetDuration){
-                    myDrive.arcadeDrive(-autonSpeed, 0);
+                    driveTrain.arcadeDrive(-autonSpeed, 0);
                 }
                 autonMode = autonModes.TURN2;
                 break;
@@ -149,8 +136,8 @@ public class robot extends IterativeRobot {
                 } else targetHeading = gyroSPI.getAngle() + 80;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
-                    if (isRed) myDrive.arcadeDrive(0, autonTurn);
-                    else  myDrive.arcadeDrive(0, -autonTurn);
+                    if (isRed) driveTrain.arcadeDrive(0, autonTurn);
+                    else  driveTrain.arcadeDrive(0, -autonTurn);
                     SmartDashboard.putNumber("heading", gyroSPI.getAngle());
                 }
                 autonMode = autonModes.DONE;
@@ -161,14 +148,10 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledInit() {
-        SmartDashboard.putNumber("x_length", 100);
-        SmartDashboard.putNumber("y_length", 132);
+     ledMode("disabled");
     }
 
     public void disabledPeriodic() {
-        SmartDashboard.putBoolean("auton_ready",false);
-        SmartDashboard.putNumber("StartPosInCode",42);
-        SmartDashboard.putBoolean("enabled",false);
     }
 
     public void teleopInit() {
@@ -207,11 +190,11 @@ public class robot extends IterativeRobot {
                 //hopBack
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
-                    myDrive.arcadeDrive(hopBackSpeed, 0);
+                    driveTrain.arcadeDrive(hopBackSpeed, 0);
                 }
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
-                    myDrive.arcadeDrive((hopBackSpeed * -1.2), 0);
+                    driveTrain.arcadeDrive((hopBackSpeed * -1.2), 0);
                 }
             }
             clamp();
@@ -219,38 +202,16 @@ public class robot extends IterativeRobot {
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
             }
-            if(xbox.isToggled(OI.YBUTTON)) {
-                if (climbing == false) {
-                    climbing = true;
-                } else if (climbing == true) {
-                    climbing = false;
-                }
-            }
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
             } else dumper.set(-1);
-            myDrive.arcadeDrive(-currentThrottle,currentTurn);
-            if(climbing == true) {
-                ledMode("up");
-                SmartDashboard.putBoolean("climb", true);
-            }
-            if(dumping == true) {
-                ledMode("dump");
-                SmartDashboard.putBoolean("dump", true);
-            } else {
-                ledMode("normal");
-                SmartDashboard.putBoolean("dump", false);
-            }
+            driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
                 wapomatic.set(lTriggerValue);
             } else wapomatic.set(-lTriggerValue);
-            if(testSwitch.get())
-            {
-                SmartDashboard.putBoolean("testSwitch", true);
-            } else SmartDashboard.putBoolean("testSwitch", false);
             heading = gyroSPI.getAngle();
             SmartDashboard.putNumber("heading", heading);
         }
