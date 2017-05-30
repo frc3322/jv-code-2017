@@ -11,7 +11,7 @@ public class robot extends IterativeRobot {
     RobotDrive driveTrain;
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
-    static climber climbcontrol;
+    static climber climbControl;
     String AutonTime;
     double heading;
     double lTriggerValue;
@@ -57,7 +57,7 @@ public class robot extends IterativeRobot {
         dumper.enableLimitSwitch(true, true);
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
-        climbcontrol = new climber();
+        climbControl = new climber();
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
     }
@@ -209,7 +209,7 @@ public class robot extends IterativeRobot {
                 dumper.set(1);
             } else dumper.set(-1);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
-            climbcontrol.climb(OI.YBUTTON, OI.BBUTTON);
+            climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
