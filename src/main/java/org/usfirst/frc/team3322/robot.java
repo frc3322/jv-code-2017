@@ -45,6 +45,7 @@ public class robot extends IterativeRobot {
     double autonTurn;
     double hopBackSpeed;
     double hopBackTime;
+    double maxWap;
     Preferences prefs;
     AnalogInput ultraL = new AnalogInput(0);
     AnalogInput ultraR = new AnalogInput(1);
@@ -158,6 +159,8 @@ public class robot extends IterativeRobot {
         prefs = Preferences.getInstance();
         hopBackSpeed = prefs.getDouble("hopBackSpeed", 0.2);
         hopBackTime = prefs.getDouble("hopBackTime", 100);
+        maxWap = prefs.getDouble("maxWap", 0.9);
+        SmartDashboard.putNumber("maxWap", maxWap);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
         ultraL.setGlobalSampleRate(1000);
@@ -210,8 +213,12 @@ public class robot extends IterativeRobot {
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
-                wapomatic.set(lTriggerValue);
-            } else wapomatic.set(-lTriggerValue);
+                if (lTriggerValue < maxWap) {
+                    wapomatic.set(lTriggerValue);
+                } else wapomatic.set(maxWap);
+            } else if (lTriggerValue < maxWap) {
+                wapomatic.set(-lTriggerValue);
+            } else wapomatic.set(-maxWap);
             heading = gyroSPI.getAngle();
             SmartDashboard.putNumber("heading", heading);
         }
