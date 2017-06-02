@@ -46,37 +46,47 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     double maxWap;
+    // makes variables editable via Git
     Preferences prefs;
+    //Ultrasound sensors
     AnalogInput ultraL = new AnalogInput(0);
     AnalogInput ultraR = new AnalogInput(1);
 
     public void robotInit() {
+        //ingestion mechanism
         wapomatic = new Talon(6);
         driveTrain = new RobotDrive(1, 0, 3, 2);
+        //ball dumper
         dumper = new CANTalon(4);
         dumper.enableLimitSwitch(true, true);
+        //controller
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
         climbControl = new climber();
+        //gyros
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
     }
 
     public void autonomousInit() {
+        // creates variables editable via SmartDashboard
         prefs = Preferences.getInstance();
         autonSpeed = prefs.getDouble("autonSpeed", 0.5);
         autonTurn = prefs.getDouble("autonTurn", 0.25);
         SmartDashboard.putNumber("autonSpeed", autonSpeed);
         SmartDashboard.putNumber("autonTurn", autonTurn);
+        // Alliance color
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
         gyroSPI.reset();
+        // resets auton
         autonMode = autonModes.DUMP;
 
     }
 
     public void ledMode(String mode) {
+        // For contact between RIO and Arduino
         char[] CharArray = mode.toCharArray();
         byte[] WriteData = new byte[CharArray.length];
         for (int i = 0; i < CharArray.length; i++) {
@@ -86,9 +96,11 @@ public class robot extends IterativeRobot {
     }
 
     public void autonomousPeriodic() {
+        // auton timer
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
+        // Auton plan: Dump and Run!
         switch (autonMode){
             case DUMP:
                 switchTime = System.currentTimeMillis();
