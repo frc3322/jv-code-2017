@@ -29,6 +29,7 @@ public class robot extends IterativeRobot {
     Talon wapomatic;
     CANTalon dumper;
     ADXRS450_Gyro gyroSPI;
+    DigitalOutput flaps;
     public enum autonModes{
         DUMP,
         BACKUP1,
@@ -40,6 +41,7 @@ public class robot extends IterativeRobot {
     autonModes autonMode;
     long targetDuration;
     long switchTime;
+    long autonStart;
     double targetHeading;
     double autonSpeed;
     double autonTurn;
@@ -66,6 +68,8 @@ public class robot extends IterativeRobot {
         //gyros
         gyroSPI = new ADXRS450_Gyro();
         gyroSPI.calibrate();
+        flaps = new DigitalOutput(0);
+        flaps.set(false);
     }
 
     public void autonomousInit() {
@@ -80,6 +84,8 @@ public class robot extends IterativeRobot {
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
         gyroSPI.reset();
+        flaps.set(true);
+        autonStart = System.currentTimeMillis();
         // resets auton
         autonMode = autonModes.DUMP;
 
@@ -100,6 +106,9 @@ public class robot extends IterativeRobot {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
+        if(System.currentTimeMillis() - autonStart < 1000){
+            flaps.set(true);
+        } else flaps.set(false);
         // Auton plan: Dump and Run!
         switch (autonMode){
             case DUMP:
