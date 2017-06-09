@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.CANTalon;
+import com.kauailabs.navx.frc.AHRS;
 
 public class robot extends IterativeRobot {
     RobotDrive driveTrain;
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
     static climber climbControl;
+    static AHRS navx;
     String AutonTime;
     double heading;
     double lTriggerValue;
@@ -67,8 +69,9 @@ public class robot extends IterativeRobot {
         CameraServer.getInstance().startAutomaticCapture();
         climbControl = new climber();
         //gyros
-        gyroSPI = new ADXRS450_Gyro();
-        gyroSPI.calibrate();
+        //gyroSPI = new ADXRS450_Gyro();
+        //gyroSPI.calibrate();
+        navx = new AHRS(SerialPort.Port.kMXP);
         lFlap = new DigitalOutput(0);
         rFlap = new DigitalOutput(1);
         lFlap.set(false);
@@ -86,7 +89,8 @@ public class robot extends IterativeRobot {
         color = ds.getAlliance();
         isRed = (color == DriverStation.Alliance.Red);
         SmartDashboard.putBoolean("isRed", isRed);
-        gyroSPI.reset();
+        //gyroSPI.reset();
+        navx.reset();
         lFlap.set(true);
         rFlap.set(true);
         autonStart = System.currentTimeMillis();
@@ -140,13 +144,13 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
                 if (isRed) {
-                    targetHeading = gyroSPI.getAngle() + 45;
-                } else targetHeading = gyroSPI.getAngle() - 45;
+                    targetHeading = navx.getYaw() + 45;
+                } else targetHeading = navx.getYaw() - 45;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
-                while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
+                while((Math.abs(targetHeading - navx.getYaw()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
                     if (isRed) driveTrain.arcadeDrive(0, -autonTurn);
                    else  driveTrain.arcadeDrive(0, autonTurn);
-                   SmartDashboard.putNumber("heading", gyroSPI.getAngle());
+                   SmartDashboard.putNumber("heading", navx.getYaw());
                 }
                 autonMode = autonModes.BACKUP2;
                 break;
@@ -162,13 +166,13 @@ public class robot extends IterativeRobot {
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
                 if (isRed) {
-                    targetHeading = gyroSPI.getAngle() - 80;
-                } else targetHeading = gyroSPI.getAngle() + 80;
+                    targetHeading = navx.getYaw() - 80;
+                } else targetHeading = navx.getYaw() + 80;
                 SmartDashboard.putNumber("targetHeading", targetHeading);
-                while((Math.abs(targetHeading - gyroSPI.getAngle()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
+                while((Math.abs(targetHeading - navx.getYaw()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
                     if (isRed) driveTrain.arcadeDrive(0, autonTurn);
                     else  driveTrain.arcadeDrive(0, -autonTurn);
-                    SmartDashboard.putNumber("heading", gyroSPI.getAngle());
+                    SmartDashboard.putNumber("heading", navx.getYaw());
                 }
                 autonMode = autonModes.DONE;
                 break;
