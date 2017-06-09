@@ -202,6 +202,7 @@ public class robot extends IterativeRobot {
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
+        navx.reset();
     }
 
     public void teleopPeriodic() {
@@ -218,8 +219,10 @@ public class robot extends IterativeRobot {
         while (isOperatorControl() && isEnabled()) {
             int distL;
             int distR;
+            heading = navx.getYaw();
             distL = ultraL.getValue();
             distR = ultraR.getValue();
+            SmartDashboard.putNumber("heading", heading);
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
             if(xbox.pressedOnce(OI.BBUTTON)) {
