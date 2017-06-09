@@ -13,7 +13,7 @@ public class robot extends IterativeRobot {
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
     static climber climbControl;
-    static AHRS navx;
+    public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
     double heading;
     double lTriggerValue;
@@ -71,7 +71,6 @@ public class robot extends IterativeRobot {
         //gyros
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
-        navx = new AHRS(SerialPort.Port.kMXP);
         lFlap = new DigitalOutput(0);
         rFlap = new DigitalOutput(1);
         lFlap.set(false);
