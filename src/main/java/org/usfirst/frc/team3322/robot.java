@@ -201,6 +201,8 @@ public class robot extends IterativeRobot {
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
+        lFlap.set(false);
+        rFlap.set(false);
         navx.reset();
     }
 
@@ -215,6 +217,14 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
+        if (xbox.pressedOnce(OI.START)){
+            lFlap.set(true);
+            rFlap.set(true);
+        }
+        if (xbox.pressedOnce(OI.BACK)) {
+            lFlap.set(false);
+            rFlap.set(false);
+        }
         while (isOperatorControl() && isEnabled()) {
             int distL;
             int distR;
