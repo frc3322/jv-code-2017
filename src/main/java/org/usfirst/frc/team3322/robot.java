@@ -13,7 +13,7 @@ public class robot extends IterativeRobot {
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
     static climber climbControl;
-    public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
+    public static AHRS navx = new AHRS(SerialPort.Port.kUSB);
     String AutonTime;
     double heading;
     double lTriggerValue;
@@ -254,7 +254,6 @@ public class robot extends IterativeRobot {
             } else if (lTriggerValue < maxWap) {
                 wapomatic.set(-lTriggerValue);
             } else wapomatic.set(-maxWap);
-            heading = gyroSPI.getAngle();
             SmartDashboard.putNumber("heading", heading);
         }
 
