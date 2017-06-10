@@ -13,7 +13,7 @@ public class robot extends IterativeRobot {
     DriverStation ds = DriverStation.getInstance();
     static OI xbox;
     static climber climbControl;
-    public static AHRS navx = new AHRS(SerialPort.Port.kUSB);
+    public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
     double heading;
     double lTriggerValue;
