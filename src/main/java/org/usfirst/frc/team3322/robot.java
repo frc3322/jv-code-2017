@@ -271,6 +271,7 @@ public class robot extends IterativeRobot {
     }
     private void clamp(){
         clampPow = prefs.getDouble("clampPow", 2);
+        SmartDashboard.putNumber("clampPow", clampPow);
         currentThrottle = xbox.getFineAxis(OI.L_YAXIS, clampPow);
         currentTurn = xbox.getFineAxis(OI.R_XAXIS, clampPow);
 
