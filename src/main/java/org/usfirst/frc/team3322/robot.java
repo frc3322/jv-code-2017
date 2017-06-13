@@ -269,8 +269,8 @@ public class robot extends IterativeRobot {
 
     }
     private void clamp(){
-        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 2);
-        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 2);
+        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
+        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
 
         double deltaTurn = currentTurn - previousTurn;
         double deltaThrottle = currentThrottle - previousThrottle;
