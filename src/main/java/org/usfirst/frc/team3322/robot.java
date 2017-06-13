@@ -51,6 +51,7 @@ public class robot extends IterativeRobot {
     double hopBackSpeed;
     double hopBackTime;
     double maxWap;
+    double clampPow;
     // makes variables editable via Git
     Preferences prefs;
     //Ultrasound sensors
@@ -269,8 +270,9 @@ public class robot extends IterativeRobot {
 
     }
     private void clamp(){
-        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, 3);
-        currentTurn = xbox.getFineAxis(OI.R_XAXIS, 3);
+        clampPow = prefs.getDouble("clampPow", 2);
+        currentThrottle = xbox.getFineAxis(OI.L_YAXIS, clampPow);
+        currentTurn = xbox.getFineAxis(OI.R_XAXIS, clampPow);
 
         double deltaTurn = currentTurn - previousTurn;
         double deltaThrottle = currentThrottle - previousThrottle;
