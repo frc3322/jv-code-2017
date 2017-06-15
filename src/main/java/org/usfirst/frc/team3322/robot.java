@@ -15,7 +15,7 @@ public class robot extends IterativeRobot {
     static climber climbControl;
     public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
-    Servo lServo;
+    Servo lServo = new Servo(9);
     double heading;
     double lTriggerValue;
     double previousThrottle = 0,
@@ -77,7 +77,6 @@ public class robot extends IterativeRobot {
         rFlap = new DigitalOutput(1);
         lFlap.set(false);
         rFlap.set(false);
-        lServo = new Servo(6);
     }
 
     public void autonomousInit() {
