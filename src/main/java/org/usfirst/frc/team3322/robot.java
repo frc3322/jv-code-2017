@@ -221,11 +221,9 @@ public class robot extends IterativeRobot {
         // climb = yButton
         // taunt = dpad
         if (xbox.pressedOnce(OI.START)){
-            lServo.set(.5);
             lServo.setAngle(0);
         }
         if (xbox.pressedOnce(OI.BACK)) {
-            lServo.set(.5);
             lServo.setAngle(170);
         }
         while (isOperatorControl() && isEnabled()) {
