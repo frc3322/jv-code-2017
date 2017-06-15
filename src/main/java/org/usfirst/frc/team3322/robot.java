@@ -77,6 +77,7 @@ public class robot extends IterativeRobot {
         rFlap = new DigitalOutput(1);
         lFlap.set(false);
         rFlap.set(false);
+        lServo = new Servo(9);
     }
 
     public void autonomousInit() {
