@@ -15,6 +15,7 @@ public class robot extends IterativeRobot {
     static climber climbControl;
     public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
+    Servo lServo = new Servo(9);
     double heading;
     double lTriggerValue;
     double previousThrottle = 0,
@@ -219,12 +220,12 @@ public class robot extends IterativeRobot {
         // climb = yButton
         // taunt = dpad
         if (xbox.pressedOnce(OI.START)){
-            lFlap.set(true);
-            rFlap.set(true);
+            lServo.set(.5);
+            lServo.setAngle(0);
         }
         if (xbox.pressedOnce(OI.BACK)) {
-            lFlap.set(false);
-            rFlap.set(false);
+            lServo.set(.5);
+            lServo.setAngle(170);
         }
         while (isOperatorControl() && isEnabled()) {
             int distL;
