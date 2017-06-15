@@ -53,6 +53,7 @@ public class robot extends IterativeRobot {
     double hopBackTime;
     double maxWap;
     double clampPow;
+    double lServoValue;
     // makes variables editable via Git
     Preferences prefs;
     //Ultrasound sensors
@@ -194,9 +195,11 @@ public class robot extends IterativeRobot {
         hopBackSpeed = prefs.getDouble("hopBackSpeed", 0.2);
         hopBackTime = prefs.getDouble("hopBackTime", 100);
         maxWap = prefs.getDouble("maxWap", 0.9);
+        lServoValue = prefs.getDouble("lServoValue", 0.5);
         SmartDashboard.putNumber("maxWap", maxWap);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
+        SmartDashboard.putNumber("lServoValue", lServoValue);
         ultraL.setGlobalSampleRate(1000);
         ultraR.setGlobalSampleRate(1000);
         ultraL.setOversampleBits(10);
@@ -219,14 +222,15 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        if (xbox.pressedOnce(OI.XBUTTON)){
+        /*if (xbox.pressedOnce(OI.XBUTTON)){
             lServo.setAngle(0);
         }
-        if (xbox.pressedOnce(OI.YBUTTON)) {
-            lServo.setAngle(170);
-        }
-        while (isOperatorControl() && isEnabled()) {
-            int distL;
+        if (xbox.pressedOnce(OI.YBUTTON )) {
+                lServo.setAngle(170);
+            }*/
+            lServo.set(lServoValue);
+            while (isOperatorControl() && isEnabled()) {
+                int distL;
             int distR;
             heading = navx.getYaw();
             distL = ultraL.getValue();
