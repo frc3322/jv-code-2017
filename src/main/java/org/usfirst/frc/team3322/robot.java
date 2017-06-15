@@ -184,7 +184,8 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledInit() {
-     ledMode("disabled");
+        ledMode("disabled");
+        lServo.setAngle(45);
     }
 
     public void disabledPeriodic() {
@@ -195,11 +196,9 @@ public class robot extends IterativeRobot {
         hopBackSpeed = prefs.getDouble("hopBackSpeed", 0.2);
         hopBackTime = prefs.getDouble("hopBackTime", 100);
         maxWap = prefs.getDouble("maxWap", 0.9);
-        lServoValue = prefs.getDouble("lServoValue", 0.5);
         SmartDashboard.putNumber("maxWap", maxWap);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
-        SmartDashboard.putNumber("lServoValue", lServoValue);
         ultraL.setGlobalSampleRate(1000);
         ultraR.setGlobalSampleRate(1000);
         ultraL.setOversampleBits(10);
@@ -228,7 +227,7 @@ public class robot extends IterativeRobot {
         if (xbox.pressedOnce(OI.YBUTTON )) {
                 lServo.setAngle(170);
             }*/
-            lServo.set(lServoValue);
+            lServo.set(145);
             while (isOperatorControl() && isEnabled()) {
                 int distL;
             int distR;
