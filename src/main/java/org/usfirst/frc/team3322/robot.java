@@ -219,10 +219,10 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        if (xbox.pressedOnce(OI.START)){
+        if (xbox.pressedOnce(OI.XBUTTON)){
             lServo.setAngle(0);
         }
-        if (xbox.pressedOnce(OI.BACK)) {
+        if (xbox.pressedOnce(OI.YBUTTON)) {
             lServo.setAngle(170);
         }
         while (isOperatorControl() && isEnabled()) {
@@ -254,7 +254,7 @@ public class robot extends IterativeRobot {
                 dumper.set(1);
             } else dumper.set(-1);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
-            climbControl.climb(OI.YBUTTON, OI.XBUTTON);
+            //climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
