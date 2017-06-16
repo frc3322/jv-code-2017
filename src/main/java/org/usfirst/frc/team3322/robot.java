@@ -222,9 +222,6 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        if (xbox.heldDown(OI.XBUTTON)){
-            lServo.setAngle(45);
-        }
         /*if (xbox.pressedOnce(OI.YBUTTON )) {
                 lServo.setAngle(170);
             }*/
@@ -237,6 +234,9 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("heading", heading);
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
+            if (xbox.heldDown(OI.XBUTTON)){
+                    lServo.setAngle(45);
+                }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
