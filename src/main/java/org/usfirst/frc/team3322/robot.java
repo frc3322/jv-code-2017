@@ -227,7 +227,7 @@ public class robot extends IterativeRobot {
         if (xbox.pressedOnce(OI.YBUTTON )) {
                 lServo.setAngle(170);
             }*/
-            lServo.set(145);
+            lServo.setAngle(145);
             while (isOperatorControl() && isEnabled()) {
                 int distL;
             int distR;
