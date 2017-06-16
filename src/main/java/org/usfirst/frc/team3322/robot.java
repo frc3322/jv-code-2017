@@ -207,6 +207,7 @@ public class robot extends IterativeRobot {
         ultraR.setAverageBits(5);
         lFlap.set(false);
         rFlap.set(false);
+        lServo.setAngle(145);
         navx.reset();
     }
 
@@ -227,7 +228,6 @@ public class robot extends IterativeRobot {
         if (xbox.pressedOnce(OI.YBUTTON )) {
                 lServo.setAngle(170);
             }*/
-            lServo.setAngle(145);
             while (isOperatorControl() && isEnabled()) {
                 int distL;
             int distR;
