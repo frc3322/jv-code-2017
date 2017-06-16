@@ -185,7 +185,6 @@ public class robot extends IterativeRobot {
 
     public void disabledInit() {
         ledMode("disabled");
-        lServo.setAngle(45);
     }
 
     public void disabledPeriodic() {
@@ -228,6 +227,7 @@ public class robot extends IterativeRobot {
         if (xbox.pressedOnce(OI.YBUTTON )) {
                 lServo.setAngle(170);
             }*/
+            lServo.setAngle(45);
             while (isOperatorControl() && isEnabled()) {
                 int distL;
             int distR;
