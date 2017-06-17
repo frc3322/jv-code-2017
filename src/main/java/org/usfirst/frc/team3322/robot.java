@@ -59,7 +59,7 @@ public class robot extends IterativeRobot {
     public void robotInit() {
         //ingestion mechanism
         wapomatic = new Talon(6);
-        driveTrain = new RobotDrive(1, 0, 3, 2);
+        driveTrain = new RobotDrive(2, 3, 1, 0);
         //ball dumper
         dumper = new CANTalon(4);
         dumper.enableLimitSwitch(true, true);
@@ -262,7 +262,7 @@ public class robot extends IterativeRobot {
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
                     ledMode("UP");
                 }
-            lTriggerValue = Math.abs(xbox.getAxis(2))/2;
+            lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
                 if (lTriggerValue < maxWap) {
