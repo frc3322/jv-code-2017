@@ -31,9 +31,6 @@ public class robot extends IterativeRobot {
     static I2C Arduino = new I2C(I2C.Port.kOnboard, 4);
     Talon wapomatic;
     CANTalon dumper;
-    ADXRS450_Gyro gyroSPI;
-    DigitalOutput lFlap;
-    DigitalOutput rFlap;
     public enum autonModes{
         DUMP,
         BACKUP1,
@@ -112,13 +109,6 @@ public class robot extends IterativeRobot {
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
-        if(System.currentTimeMillis() - autonStart < 1000){
-            lFlap.set(true);
-            rFlap.set(true);
-        } else {
-            lFlap.set(false);
-            rFlap.set(false);
-        }
         // Auton plan: Dump and Run!
         switch (autonMode){
             case DUMP:
@@ -201,8 +191,6 @@ public class robot extends IterativeRobot {
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
-        lFlap.set(false);
-        rFlap.set(false);
         flapServo.setAngle(145);
         navx.reset();
     }
@@ -218,9 +206,6 @@ public class robot extends IterativeRobot {
         // invertDrive = rBumper
         // climb = yButton
         // taunt = dpad
-        /*if (xbox.pressedOnce(OI.YBUTTON )) {
-                lServo.setAngle(170);
-            }*/
             while (isOperatorControl() && isEnabled()) {
             int distL;
             int distR;
@@ -233,6 +218,9 @@ public class robot extends IterativeRobot {
             if (xbox.heldDown(OI.START)){
                     flapServo.setAngle(145);
                 }
+            if (xbox.heldDown(OI.BACK)){
+                flapServo.setAngle(45);
+            }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
@@ -251,9 +239,10 @@ public class robot extends IterativeRobot {
             }
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
+                ledMode("DUMP");
             } else dumper.set(-1);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
-            //climbControl.climb(OI.YBUTTON, OI.XBUTTON);
+            climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             lTriggerValue = Math.abs(xbox.getAxis(2));
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
