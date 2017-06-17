@@ -257,7 +257,7 @@ public class robot extends IterativeRobot {
                 dumper.set(1);
                 ledMode("DUMP");
             } else dumper.set(-1);
-            // driveTrain.arcadeDrive(-currentThrottle,currentTurn);
+            driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
                     ledMode("UP");
