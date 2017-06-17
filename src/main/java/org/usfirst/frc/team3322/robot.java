@@ -59,7 +59,7 @@ public class robot extends IterativeRobot {
     public void robotInit() {
         //ingestion mechanism
         wapomatic = new Talon(6);
-        driveTrain = new RobotDrive(2, 3, 1, 0);
+        driveTrain = new RobotDrive(1, 0, 3, 2);
         //ball dumper
         dumper = new CANTalon(4);
         dumper.enableLimitSwitch(true, true);
