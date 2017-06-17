@@ -15,7 +15,7 @@ public class robot extends IterativeRobot {
     static climber climbControl;
     public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
-    Servo lServo = new Servo(9);
+    Servo flapServo = new Servo(9);
     double heading;
     double lTriggerValue;
     double previousThrottle = 0,
@@ -53,7 +53,6 @@ public class robot extends IterativeRobot {
     double hopBackTime;
     double maxWap;
     double clampPow;
-    double lServoValue;
     // makes variables editable via Git
     Preferences prefs;
     //Ultrasound sensors
@@ -74,10 +73,8 @@ public class robot extends IterativeRobot {
         //gyros
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
-        lFlap = new DigitalOutput(0);
-        rFlap = new DigitalOutput(1);
-        lFlap.set(false);
-        rFlap.set(false);
+        flapServo.setAngle(45);
+
     }
 
     public void autonomousInit() {
@@ -93,8 +90,7 @@ public class robot extends IterativeRobot {
         SmartDashboard.putBoolean("isRed", isRed);
         //gyroSPI.reset();
         navx.reset();
-        lFlap.set(true);
-        rFlap.set(true);
+        flapServo.setAngle(145);
         autonStart = System.currentTimeMillis();
         // resets auton
         autonMode = autonModes.DUMP;
@@ -188,7 +184,7 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        lServo.setAngle(45);
+        flapServo.setAngle(45);
     }
 
     public void teleopInit() {
@@ -207,7 +203,7 @@ public class robot extends IterativeRobot {
         ultraR.setAverageBits(5);
         lFlap.set(false);
         rFlap.set(false);
-        lServo.setAngle(145);
+        flapServo.setAngle(145);
         navx.reset();
     }
 
@@ -226,7 +222,7 @@ public class robot extends IterativeRobot {
                 lServo.setAngle(170);
             }*/
             while (isOperatorControl() && isEnabled()) {
-                int distL;
+            int distL;
             int distR;
             heading = navx.getYaw();
             distL = ultraL.getValue();
@@ -234,8 +230,8 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("heading", heading);
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
-            if (xbox.heldDown(OI.XBUTTON)){
-                    lServo.setAngle(45);
+            if (xbox.heldDown(OI.START)){
+                    flapServo.setAngle(145);
                 }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
