@@ -71,6 +71,7 @@ public class robot extends IterativeRobot {
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
         flapServo.setAngle(45);
+        ledMode("LOADING");
 
     }
 
@@ -89,6 +90,7 @@ public class robot extends IterativeRobot {
         navx.reset();
         flapServo.setAngle(145);
         autonStart = System.currentTimeMillis();
+        ledMode("ENABLED");
         // resets auton
         autonMode = autonModes.DUMP;
 
@@ -105,7 +107,7 @@ public class robot extends IterativeRobot {
     }
 
     public void autonomousPeriodic() {
-        // auton timer
+        // auton time
         AutonTime = String.valueOf(System.currentTimeMillis());
         SmartDashboard.putString("AutonTime",AutonTime);
         SmartDashboard.putString("autonMode", String.valueOf(autonMode));
@@ -114,6 +116,7 @@ public class robot extends IterativeRobot {
             case DUMP:
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
+                ledMode("DUMP");
                 while(System.currentTimeMillis() - switchTime < targetDuration){
                     dumper.set(1);
             }
@@ -123,6 +126,9 @@ public class robot extends IterativeRobot {
             case BACKUP1:
                 switchTime = System.currentTimeMillis();
                 targetDuration = 5000;
+                if (isRed){
+                    ledMode("REDBACK");
+                } else ledMode("BLUBACK");
                 while(System.currentTimeMillis() - switchTime < targetDuration){
                     driveTrain.arcadeDrive(-autonSpeed, 0);
                 }
@@ -133,7 +139,11 @@ public class robot extends IterativeRobot {
                 targetDuration = 3000;
                 if (isRed) {
                     targetHeading = navx.getYaw() + 45;
-                } else targetHeading = navx.getYaw() - 45;
+                    ledMode("REDIDLE");
+                } else {
+                    targetHeading = navx.getYaw() - 45;
+                    ledMode("BLUIDLE");
+                }
                 SmartDashboard.putNumber("targetHeading", targetHeading);
                 while((Math.abs(targetHeading - navx.getYaw()) > 0.5) && (System.currentTimeMillis() - switchTime < targetDuration)){
                     if (isRed) driveTrain.arcadeDrive(0, -autonTurn);
@@ -145,6 +155,9 @@ public class robot extends IterativeRobot {
             case BACKUP2:
                 switchTime = System.currentTimeMillis();
                 targetDuration = 3000;
+                if (isRed) {
+                    ledMode("REDBACK");
+                } else ledMode("BLUBACK");
                 while(System.currentTimeMillis() - switchTime < targetDuration){
                     driveTrain.arcadeDrive(-autonSpeed, 0);
                 }
@@ -170,7 +183,7 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledInit() {
-        ledMode("disabled");
+        ledMode("DISABLED");
     }
 
     public void disabledPeriodic() {
@@ -223,6 +236,9 @@ public class robot extends IterativeRobot {
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
+                if (isRed = true){
+                    ledMode("REDIDLE");
+                } else ledMode("BLUIDLE");
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive(hopBackSpeed, 0);
@@ -241,9 +257,12 @@ public class robot extends IterativeRobot {
                 dumper.set(1);
                 ledMode("DUMP");
             } else dumper.set(-1);
-            driveTrain.arcadeDrive(-currentThrottle,currentTurn);
+            // driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
-            lTriggerValue = Math.abs(xbox.getAxis(2));
+            if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
+                    ledMode("UP");
+                }
+            lTriggerValue = Math.abs(xbox.getAxis(2))/2;
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
                 if (lTriggerValue < maxWap) {
