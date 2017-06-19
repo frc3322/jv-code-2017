@@ -71,7 +71,7 @@ public class robot extends IterativeRobot {
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
         flapServo.setAngle(45);
-        ledMode("LOADING");
+        ledMode("ENABLED");
 
     }
 
@@ -250,6 +250,9 @@ public class robot extends IterativeRobot {
             }
             clamp();
             currentTurn = currentTurn * -1;
+            if((xbox.isToggled(OI.DPADVERT)) || (xbox.isToggled(OI.DPADHORIZ))){
+                ledMode("TAUNT");
+            }
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
             }
@@ -258,6 +261,17 @@ public class robot extends IterativeRobot {
                 ledMode("DUMP");
             } else dumper.set(-1);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
+            if(currentThrottle > 0){
+                if(isRed){
+                    ledMode("REDFWD");
+                } else ledMode("BLUFWD");
+            } else if(currentThrottle < 0){
+                if(isRed){
+                    ledMode("REDBACK");
+                } else ledMode("BLUBACK");
+            } else if(isRed){
+                ledMode("REDIDLE");
+            } else ledMode("BLUIDLE");
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
                     ledMode("UP");
