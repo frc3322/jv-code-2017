@@ -261,11 +261,10 @@ public class robot extends IterativeRobot {
                 ledMode("DUMP");
             } else dumper.set(-1);*/
             if(xbox.heldDown(OI.ABUTTON)){
-                dumper.set(1);
+                dumper.set(.75);
+                } else if(xbox.heldDown(OI.BBUTTON)){
+                    dumper.set(-.75);
                 } else dumper.set(0);
-            if(xbox.heldDown(OI.BBUTTON)){
-                dumper.set(-1);
-            } else dumper.set(0);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             if(currentThrottle > 0){
                 if(isRed){
