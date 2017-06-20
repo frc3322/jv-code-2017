@@ -234,7 +234,7 @@ public class robot extends IterativeRobot {
             if (xbox.heldDown(OI.BACK)){
                 flapServo.setAngle(45);
             }
-            if(xbox.pressedOnce(OI.BBUTTON)) {
+            /*if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 if (isRed = true){
                     ledMode("REDIDLE");
@@ -247,7 +247,7 @@ public class robot extends IterativeRobot {
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive((hopBackSpeed * -1.2), 0);
                 }
-            }
+            }*/
             clamp();
             currentTurn = currentTurn * -1;
             if((xbox.isToggled(OI.DPADVERT)) || (xbox.isToggled(OI.DPADHORIZ))){
@@ -256,10 +256,16 @@ public class robot extends IterativeRobot {
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
             }
-            if(xbox.heldDown(OI.ABUTTON)) {
+            /*if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
                 ledMode("DUMP");
-            } else dumper.set(-1);
+            } else dumper.set(-1);*/
+            if(xbox.heldDown(OI.ABUTTON)){
+                dumper.set(1);
+                } else dumper.set(0);
+            if(xbox.heldDown(OI.BBUTTON)){
+                dumper.set(-1);
+            } else dumper.set(0);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             if(currentThrottle > 0){
                 if(isRed){
