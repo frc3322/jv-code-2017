@@ -70,7 +70,7 @@ public class robot extends IterativeRobot {
         //gyros
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
-        flapServo.setAngle(45);
+        flapServo.setAngle(90);
         ledMode("ENABLED");
 
     }
@@ -88,7 +88,7 @@ public class robot extends IterativeRobot {
         SmartDashboard.putBoolean("isRed", isRed);
         //gyroSPI.reset();
         navx.reset();
-        flapServo.setAngle(145);
+        flapServo.setAngle(0);
         autonStart = System.currentTimeMillis();
         ledMode("ENABLED");
         // resets auton
@@ -187,7 +187,7 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        flapServo.setAngle(45);
+        flapServo.setAngle(90);
     }
 
     public void teleopInit() {
@@ -204,7 +204,7 @@ public class robot extends IterativeRobot {
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
-        flapServo.setAngle(145);
+        flapServo.setAngle(0);
         navx.reset();
     }
 
@@ -229,10 +229,10 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
             if (xbox.heldDown(OI.START)){
-                    flapServo.setAngle(145);
+                    flapServo.setAngle(0);
                 }
             if (xbox.heldDown(OI.BACK)){
-                flapServo.setAngle(45);
+                flapServo.setAngle(90);
             }
             /*if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
