@@ -234,9 +234,6 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("heading", heading);
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
-            if(isRed){
-                ledMode("REDFWD");
-            } else ledMode("BLUFWD");
             if (xbox.heldDown(OI.START)){
                 lServo.setAngle(0);
                 rServo.setAngle(0);
@@ -263,9 +260,6 @@ public class robot extends IterativeRobot {
             }
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
-                if(isRed){
-                    ledMode("REDBACK");
-                } else ledMode("BLUBACK");
             }
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
