@@ -101,6 +101,7 @@ public class robot extends IterativeRobot {
 
     public void ledMode(String mode) {
         // For contact between RIO and Arduino
+        SmartDashboard.putString("ledMode", mode);
         char[] CharArray = mode.toCharArray();
         byte[] WriteData = new byte[CharArray.length];
         for (int i = 0; i < CharArray.length; i++) {
@@ -246,9 +247,6 @@ public class robot extends IterativeRobot {
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
-                if (isRed = true){
-                    ledMode("REDIDLE");
-                } else ledMode("BLUIDLE");
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive(hopBackSpeed, 0);
@@ -260,7 +258,7 @@ public class robot extends IterativeRobot {
             }
             clamp();
             currentTurn = currentTurn * -1;
-            if((xbox.isToggled(OI.DPADVERT)) || (xbox.isToggled(OI.DPADHORIZ))){
+            if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
                 ledMode("TAUNT");
             }
             if(xbox.isToggled(OI.RBUMPER)) {
