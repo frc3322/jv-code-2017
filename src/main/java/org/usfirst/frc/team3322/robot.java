@@ -72,7 +72,7 @@ public class robot extends IterativeRobot {
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
         lServo.setAngle(100);
-        rServo.setAngle(75);
+        rServo.setAngle(45);
         ledMode("ENABLED");
 
     }
@@ -191,7 +191,7 @@ public class robot extends IterativeRobot {
 
     public void disabledPeriodic() {
         lServo.setAngle(100);
-        rServo.setAngle(75);
+        rServo.setAngle(45);
     }
 
     public void teleopInit() {
@@ -242,7 +242,7 @@ public class robot extends IterativeRobot {
             }
             if (xbox.heldDown(OI.BACK)){
                 lServo.setAngle(100);
-                rServo.setAngle(75);
+                rServo.setAngle(45);
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
