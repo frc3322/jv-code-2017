@@ -91,7 +91,7 @@ public class robot extends IterativeRobot {
         //gyroSPI.reset();
         navx.reset();
         lServo.setAngle(0);
-        rServo.setAngle(15);
+        rServo.setAngle(25);
         autonStart = System.currentTimeMillis();
         ledMode("ENABLED");
         // resets auton
@@ -209,7 +209,7 @@ public class robot extends IterativeRobot {
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
         lServo.setAngle(0);
-        rServo.setAngle(15);
+        rServo.setAngle(25);
         navx.reset();
     }
 
@@ -238,7 +238,7 @@ public class robot extends IterativeRobot {
             } else ledMode("BLUFWD");
             if (xbox.heldDown(OI.START)){
                 lServo.setAngle(0);
-                rServo.setAngle(15);
+                rServo.setAngle(25);
             }
             if (xbox.heldDown(OI.BACK)){
                 lServo.setAngle(100);
