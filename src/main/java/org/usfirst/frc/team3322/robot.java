@@ -51,6 +51,7 @@ public class robot extends IterativeRobot {
     double hopBackTime;
     double maxWap;
     double clampPow;
+    boolean isForward;
     // makes variables editable via Git
     Preferences prefs;
     //Ultrasound sensors
@@ -211,6 +212,7 @@ public class robot extends IterativeRobot {
         ultraR.setAverageBits(5);
         lServo.setAngle(0);
         rServo.setAngle(0);
+        isForward = true;
         navx.reset();
     }
 
@@ -258,10 +260,17 @@ public class robot extends IterativeRobot {
             if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
                 ledMode("TAUNT");
             }
-            if(xbox.isToggled(OI.RBUMPER)) {
+            if(xbox.pressedOnce(OI.RBUMPER)) {
+                if(isForward){
+                    isForward = false;
+                }
+                if(!isForward){
+                    isForward = true;
+                }
+            }
+            if(!isForward){
                 currentThrottle = currentThrottle * -1;
-                SmartDashboard.putBoolean("RBUMPER", true);
-            } else SmartDashboard.putBoolean("RBUMPER", false);
+            }
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
                 ledMode("DUMP");
