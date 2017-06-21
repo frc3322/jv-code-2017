@@ -15,7 +15,8 @@ public class robot extends IterativeRobot {
     static climber climbControl;
     public static AHRS navx = new AHRS(SerialPort.Port.kMXP);
     String AutonTime;
-    Servo flapServo = new Servo(9);
+    Servo lServo = new Servo(8);
+    Servo rServo = new Servo(9);
     double heading;
     double lTriggerValue;
     double previousThrottle = 0,
@@ -70,7 +71,8 @@ public class robot extends IterativeRobot {
         //gyros
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
-        flapServo.setAngle(100);
+        lServo.setAngle(100);
+        rServo.setAngle(100);
         ledMode("ENABLED");
 
     }
@@ -88,7 +90,8 @@ public class robot extends IterativeRobot {
         SmartDashboard.putBoolean("isRed", isRed);
         //gyroSPI.reset();
         navx.reset();
-        flapServo.setAngle(0);
+        lServo.setAngle(0);
+        rServo.setAngle(0);
         autonStart = System.currentTimeMillis();
         ledMode("ENABLED");
         // resets auton
@@ -187,7 +190,8 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        flapServo.setAngle(100);
+        lServo.setAngle(100);
+        rServo.setAngle(100);
     }
 
     public void teleopInit() {
@@ -204,7 +208,8 @@ public class robot extends IterativeRobot {
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
-        flapServo.setAngle(0);
+        lServo.setAngle(0);
+        rServo.setAngle(0);
         navx.reset();
     }
 
@@ -228,13 +233,18 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("heading", heading);
             SmartDashboard.putNumber("distL", distL);
             SmartDashboard.putNumber("distR", distR);
+            if(isRed){
+                ledMode("REDFWD");
+            } else ledMode("BLUFWD");
             if (xbox.heldDown(OI.START)){
-                    flapServo.setAngle(0);
-                }
-            if (xbox.heldDown(OI.BACK)){
-                flapServo.setAngle(100);
+                lServo.setAngle(0);
+                rServo.setAngle(0);
             }
-            /*if(xbox.pressedOnce(OI.BBUTTON)) {
+            if (xbox.heldDown(OI.BACK)){
+                lServo.setAngle(100);
+                rServo.setAngle(100);
+            }
+            if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 if (isRed = true){
                     ledMode("REDIDLE");
@@ -247,7 +257,7 @@ public class robot extends IterativeRobot {
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive((hopBackSpeed * -1.2), 0);
                 }
-            }*/
+            }
             clamp();
             currentTurn = currentTurn * -1;
             if((xbox.isToggled(OI.DPADVERT)) || (xbox.isToggled(OI.DPADHORIZ))){
@@ -255,28 +265,15 @@ public class robot extends IterativeRobot {
             }
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
-            }
-            /*if(xbox.heldDown(OI.ABUTTON)) {
-                dumper.set(1);
-                ledMode("DUMP");
-            } else dumper.set(-1);*/
-            if(xbox.heldDown(OI.ABUTTON)){
-                dumper.set(.75);
-                } else if(xbox.heldDown(OI.BBUTTON)){
-                    dumper.set(-.75);
-                } else dumper.set(0);
-            driveTrain.arcadeDrive(-currentThrottle,currentTurn);
-            if(currentThrottle > 0){
-                if(isRed){
-                    ledMode("REDFWD");
-                } else ledMode("BLUFWD");
-            } else if(currentThrottle < 0){
                 if(isRed){
                     ledMode("REDBACK");
                 } else ledMode("BLUBACK");
-            } else if(isRed){
-                ledMode("REDIDLE");
-            } else ledMode("BLUIDLE");
+            }
+            if(xbox.heldDown(OI.ABUTTON)) {
+                dumper.set(1);
+                ledMode("DUMP");
+            } else dumper.set(-1);
+            driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
                     ledMode("UP");
