@@ -263,9 +263,11 @@ public class robot extends IterativeRobot {
             if(xbox.pressedOnce(OI.RBUMPER)) {
                 if(isForward){
                     isForward = false;
+                    SmartDashboard.putBoolean("isForward", false);
                 }
                 if(!isForward){
                     isForward = true;
+                    SmartDashboard.putBoolean("isForward", true);
                 }
             }
             if(!isForward){
