@@ -260,7 +260,8 @@ public class robot extends IterativeRobot {
             }
             if(xbox.isToggled(OI.RBUMPER)) {
                 currentThrottle = currentThrottle * -1;
-            }
+                SmartDashboard.putBoolean("RBUMPER", true);
+            } else SmartDashboard.putBoolean("RBUMPER", false);
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
                 ledMode("DUMP");
