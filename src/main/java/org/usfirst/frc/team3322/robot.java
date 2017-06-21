@@ -51,10 +51,6 @@ public class robot extends IterativeRobot {
     double hopBackTime;
     double maxWap;
     double clampPow;
-    double lServoIn;
-    double lServoOut;
-    double rServoIn;
-    double rServoOut;
     // makes variables editable via Git
     Preferences prefs;
     //Ultrasound sensors
@@ -75,8 +71,8 @@ public class robot extends IterativeRobot {
         //gyros
         //gyroSPI = new ADXRS450_Gyro();
         //gyroSPI.calibrate();
-        //lServo.setAngle(100);
-        //rServo.setAngle(45);
+        lServo.setAngle(95);
+        rServo.setAngle(55);
         ledMode("ENABLED");
 
     }
@@ -94,8 +90,8 @@ public class robot extends IterativeRobot {
         SmartDashboard.putBoolean("isRed", isRed);
         //gyroSPI.reset();
         navx.reset();
-        //lServo.setAngle(0);
-        //rServo.setAngle(0);
+        lServo.setAngle(0);
+        rServo.setAngle(0);
         autonStart = System.currentTimeMillis();
         ledMode("ENABLED");
         // resets auton
@@ -194,8 +190,8 @@ public class robot extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        //lServo.setAngle(100);
-        //rServo.setAngle(45);
+        lServo.setAngle(95);
+        rServo.setAngle(55);
     }
 
     public void teleopInit() {
@@ -203,25 +199,17 @@ public class robot extends IterativeRobot {
         hopBackSpeed = prefs.getDouble("hopBackSpeed", 0.2);
         hopBackTime = prefs.getDouble("hopBackTime", 100);
         maxWap = prefs.getDouble("maxWap", 0.9);
-        lServoIn = prefs.getDouble("lServoIn", 45);
-        lServoOut = prefs.getDouble("lServoOut", 0);
-        rServoIn = prefs.getDouble("rServoIn", 45);
-        rServoOut = prefs.getDouble("rServoOut", 0);
         SmartDashboard.putNumber("maxWap", maxWap);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
-        SmartDashboard.putNumber("lServoIn", lServoIn);
-        SmartDashboard.putNumber("lServoOut", lServoOut);
-        SmartDashboard.putNumber("rServoIn", rServoIn);
-        SmartDashboard.putNumber("rServoOut", rServoOut);
         ultraL.setGlobalSampleRate(1000);
         ultraR.setGlobalSampleRate(1000);
         ultraL.setOversampleBits(10);
         ultraR.setOversampleBits(10);
         ultraL.setAverageBits(5);
         ultraR.setAverageBits(5);
-        lServo.setAngle(lServoOut);
-        rServo.setAngle(rServoOut);
+        lServo.setAngle(0);
+        rServo.setAngle(0);
         navx.reset();
     }
 
@@ -249,12 +237,12 @@ public class robot extends IterativeRobot {
                 ledMode("REDFWD");
             } else ledMode("BLUFWD");
             if (xbox.heldDown(OI.START)){
-                lServo.setAngle(lServoOut);
-                rServo.setAngle(rServoOut);
+                lServo.setAngle(0);
+                rServo.setAngle(0);
             }
             if (xbox.heldDown(OI.BACK)){
-                lServo.setAngle(lServoIn);
-                rServo.setAngle(rServoIn);
+                lServo.setAngle(95);
+                rServo.setAngle(55);
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
