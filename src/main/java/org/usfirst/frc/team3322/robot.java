@@ -225,13 +225,14 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("heading", heading);
             if (xbox.pressedOnce(OI.START)){
                 if (!flapsOut) {
-                lServo.setAngle(0);
-                rServo.setAngle(0);
-                flapsOut = true;
-            } else {
-                lServo.setAngle(95);
-                rServo.setAngle(55);
-                flapsOut = false;
+                    lServo.setAngle(0);
+                    rServo.setAngle(0);
+                    flapsOut = true;
+                } else {
+                    lServo.setAngle(95);
+                    rServo.setAngle(55);
+                    flapsOut = false;
+                }
             }
             if (xbox.pressedOnce(OI.BACK)){
                     ledMode("TAUNT");
