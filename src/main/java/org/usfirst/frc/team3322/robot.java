@@ -54,9 +54,6 @@ public class robot extends IterativeRobot {
     boolean isForward;
     // makes variables editable via Git
     Preferences prefs;
-    //Ultrasound sensors
-    AnalogInput ultraL = new AnalogInput(0);
-    AnalogInput ultraR = new AnalogInput(1);
 
     public void robotInit() {
         //ingestion mechanism
@@ -69,9 +66,6 @@ public class robot extends IterativeRobot {
         xbox = new OI();
         CameraServer.getInstance().startAutomaticCapture();
         climbControl = new climber();
-        //gyros
-        //gyroSPI = new ADXRS450_Gyro();
-        //gyroSPI.calibrate();
         lServo.setAngle(95);
         rServo.setAngle(55);
         ledMode("ENABLED");
@@ -204,12 +198,6 @@ public class robot extends IterativeRobot {
         SmartDashboard.putNumber("maxWap", maxWap);
         SmartDashboard.putNumber("hopBackSpeed", hopBackSpeed);
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
-        ultraL.setGlobalSampleRate(1000);
-        ultraR.setGlobalSampleRate(1000);
-        ultraL.setOversampleBits(10);
-        ultraR.setOversampleBits(10);
-        ultraL.setAverageBits(5);
-        ultraR.setAverageBits(5);
         lServo.setAngle(0);
         rServo.setAngle(0);
         isForward = true;
@@ -234,11 +222,7 @@ public class robot extends IterativeRobot {
             int distL;
             int distR;
             heading = navx.getYaw();
-            distL = ultraL.getValue();
-            distR = ultraR.getValue();
             SmartDashboard.putNumber("heading", heading);
-            SmartDashboard.putNumber("distL", distL);
-            SmartDashboard.putNumber("distR", distR);
             if (xbox.heldDown(OI.START)){
                 lServo.setAngle(0);
                 rServo.setAngle(0);
@@ -247,7 +231,7 @@ public class robot extends IterativeRobot {
                 lServo.setAngle(95);
                 rServo.setAngle(55);
             }
-            if(xbox.pressedOnce(OI.BBUTTON)) {
+            /*if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
@@ -257,7 +241,7 @@ public class robot extends IterativeRobot {
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive((hopBackSpeed * -1.2), 0);
                 }
-            }
+            }*/
             clamp();
             currentTurn = currentTurn * -1;
            /* if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
@@ -281,10 +265,15 @@ public class robot extends IterativeRobot {
             if(!isForward){
                 currentThrottle = currentThrottle * -1;
             }
-            if(xbox.heldDown(OI.ABUTTON)) {
+            /*if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
                 ledMode("DUMP");
-            } else dumper.set(-1);
+            } else dumper.set(-1);*/
+            if(xbox.heldDown(OI.ABUTTON)) {
+                dumper.set(1);
+            } else if(xbox.heldDown(OI.BBUTTON)){
+                dumper.set(-1);
+            } else dumper.set(0);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
