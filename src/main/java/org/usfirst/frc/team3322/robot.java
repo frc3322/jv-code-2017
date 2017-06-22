@@ -213,6 +213,9 @@ public class robot extends IterativeRobot {
         lServo.setAngle(0);
         rServo.setAngle(0);
         isForward = true;
+        if(isRed){
+            ledMode("REDFWD");
+        } else ledMode("BLUFWD");
         navx.reset();
     }
 
@@ -265,14 +268,14 @@ public class robot extends IterativeRobot {
                     isForward = false;
                     SmartDashboard.putBoolean("isForward", false);
                     if(isRed){
-                        ledMode("REDFWD");
-                    } else ledMode("BLUFWD");
+                        ledMode("REDBACK");
+                    } else ledMode("BLUBACK");
                 } else if(!isForward){
                     isForward = true;
                     SmartDashboard.putBoolean("isForward", true);
                     if(isRed){
-                        ledMode("REDBACK");
-                    } else ledMode("BLUBACK");
+                        ledMode("REDFWD");
+                    } else ledMode("BLUFWD");
                 }
             }
             if(!isForward){
