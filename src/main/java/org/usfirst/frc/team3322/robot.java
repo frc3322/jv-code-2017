@@ -257,9 +257,9 @@ public class robot extends IterativeRobot {
             }
             clamp();
             currentTurn = currentTurn * -1;
-            if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
+           /* if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
                 ledMode("TAUNT");
-            }
+            } */
             if(xbox.pressedOnce(OI.RBUMPER)) {
                 if(isForward){
                     isForward = false;
