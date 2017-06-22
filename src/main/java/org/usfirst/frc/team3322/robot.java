@@ -52,6 +52,7 @@ public class robot extends IterativeRobot {
     double maxWap;
     double clampPow;
     boolean isForward;
+    boolean flapsOut;
     // makes variables editable via Git
     Preferences prefs;
 
@@ -200,6 +201,7 @@ public class robot extends IterativeRobot {
         SmartDashboard.putNumber("hopBackTime", hopBackTime);
         lServo.setAngle(0);
         rServo.setAngle(0);
+        flapsOut = true;
         isForward = true;
         if(isRed){
             ledMode("REDFWD");
@@ -221,13 +223,18 @@ public class robot extends IterativeRobot {
             while (isOperatorControl() && isEnabled()) {
             heading = navx.getYaw();
             SmartDashboard.putNumber("heading", heading);
-            if (xbox.heldDown(OI.START)){
+            if (xbox.pressedOnce(OI.START)){
+                if (!flapsOut) {
                 lServo.setAngle(0);
                 rServo.setAngle(0);
-            }
-            if (xbox.heldDown(OI.BACK)){
+                flapsOut = true;
+            } else {
                 lServo.setAngle(95);
                 rServo.setAngle(55);
+                flapsOut = false;
+            }
+            if (xbox.pressedOnce(OI.BACK)){
+                    ledMode("TAUNT");
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
