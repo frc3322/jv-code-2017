@@ -264,9 +264,15 @@ public class robot extends IterativeRobot {
                 if(isForward){
                     isForward = false;
                     SmartDashboard.putBoolean("isForward", false);
+                    if(isRed){
+                        ledMode("REDFWD");
+                    } else ledMode("BLUFWD");
                 } else if(!isForward){
                     isForward = true;
                     SmartDashboard.putBoolean("isForward", true);
+                    if(isRed){
+                        ledMode("REDBACK");
+                    } else ledMode("BLUBACK");
                 }
             }
             if(!isForward){
