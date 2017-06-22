@@ -231,6 +231,7 @@ public class robot extends IterativeRobot {
             }
             if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
+                ledMode("TAUNT");
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive(hopBackSpeed, 0);
