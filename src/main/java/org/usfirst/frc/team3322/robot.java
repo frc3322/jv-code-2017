@@ -219,8 +219,6 @@ public class robot extends IterativeRobot {
         // climb = yButton
         // taunt = dpad
             while (isOperatorControl() && isEnabled()) {
-            int distL;
-            int distR;
             heading = navx.getYaw();
             SmartDashboard.putNumber("heading", heading);
             if (xbox.heldDown(OI.START)){
@@ -231,7 +229,7 @@ public class robot extends IterativeRobot {
                 lServo.setAngle(95);
                 rServo.setAngle(55);
             }
-            /*if(xbox.pressedOnce(OI.BBUTTON)) {
+            if(xbox.pressedOnce(OI.BBUTTON)) {
                 //hopBack
                 switchTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
@@ -241,7 +239,7 @@ public class robot extends IterativeRobot {
                 while (System.currentTimeMillis() - switchTime < hopBackTime){
                     driveTrain.arcadeDrive((hopBackSpeed * -1.2), 0);
                 }
-            }*/
+            }
             clamp();
             currentTurn = currentTurn * -1;
            /* if((xbox.pressedOnce(OI.DPADVERT)) || (xbox.pressedOnce(OI.DPADHORIZ))){
@@ -265,15 +263,10 @@ public class robot extends IterativeRobot {
             if(!isForward){
                 currentThrottle = currentThrottle * -1;
             }
-            /*if(xbox.heldDown(OI.ABUTTON)) {
-                dumper.set(1);
-                ledMode("DUMP");
-            } else dumper.set(-1);*/
             if(xbox.heldDown(OI.ABUTTON)) {
                 dumper.set(1);
-            } else if(xbox.heldDown(OI.BBUTTON)){
-                dumper.set(-1);
-            } else dumper.set(0);
+                ledMode("DUMP");
+            } else dumper.set(-1);
             driveTrain.arcadeDrive(-currentThrottle,currentTurn);
             climbControl.climb(OI.YBUTTON, OI.XBUTTON);
             if (xbox.heldDown(OI.XBUTTON) || (xbox.isToggled(OI.YBUTTON))){
@@ -283,10 +276,10 @@ public class robot extends IterativeRobot {
             SmartDashboard.putNumber("LTriggerValue", lTriggerValue);
             if (xbox.isToggled(OI.LBUMPER)) {
                 if (lTriggerValue < maxWap) {
-                    wapomatic.set(lTriggerValue);
+                    wapomatic.set(-lTriggerValue);
                 } else wapomatic.set(maxWap);
             } else if (lTriggerValue < maxWap) {
-                wapomatic.set(-lTriggerValue);
+                wapomatic.set(lTriggerValue);
             } else wapomatic.set(-maxWap);
             SmartDashboard.putNumber("heading", heading);
         }
