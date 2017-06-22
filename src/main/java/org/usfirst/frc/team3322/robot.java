@@ -264,8 +264,7 @@ public class robot extends IterativeRobot {
                 if(isForward){
                     isForward = false;
                     SmartDashboard.putBoolean("isForward", false);
-                }
-                if(!isForward){
+                } else if(!isForward){
                     isForward = true;
                     SmartDashboard.putBoolean("isForward", true);
                 }
