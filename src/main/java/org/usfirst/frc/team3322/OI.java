@@ -25,8 +25,8 @@ public class OI {
             START = 8,
             LSTICK = 9,
             RSTICK = 10,
-            DPADVERT = 7, // not reliable
-            DPADHORIZ = 6,
+            //DPADVERT = 7, // not reliable
+            //DPADHORIZ = 6,
 
     // Stick axes
     L_YAXIS = 1,
